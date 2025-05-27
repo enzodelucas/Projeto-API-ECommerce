@@ -5,15 +5,12 @@ import java.math.BigDecimal;
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
 
+
 @Entity
 public class ProdutoPedido {
 	
 	@EmbeddedId
 	private ProdutoPedidoPK id = new ProdutoPedidoPK();
-	
-	private Pedido pedido;
-	
-	private Produto produto;
 
 	private Integer quantidade;
 	
@@ -47,19 +44,10 @@ public class ProdutoPedido {
 	}
 
 
-	public Pedido getPedido() {
-		return pedido;
-	}
-
-
 	public void setPedido(Pedido pedido) {
 		this.id.setPedido(pedido);
 	}
 
-
-	public Produto getProduto() {
-		return produto;
-	}
 
 
 	public void setProduto(Produto produto) {

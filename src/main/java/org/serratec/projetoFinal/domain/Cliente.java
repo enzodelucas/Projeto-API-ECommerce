@@ -1,5 +1,7 @@
 package org.serratec.projetoFinal.domain;
 
+import java.util.List;
+
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.Entity;
@@ -25,7 +27,7 @@ public class Cliente {
 	
 	@JsonManagedReference
 	@OneToMany(mappedBy = "cliente")
-	private Pedido pedido;
+	private List<Pedido> pedidos;
 
 	public Long getId() {
 		return id;
@@ -67,13 +69,15 @@ public class Cliente {
 		this.cpf = cpf;
 	}
 
-	public Pedido getPedido() {
-		return pedido;
+	public List<Pedido> getPedidos() {
+		return pedidos;
 	}
 
-	public void setPedido(Pedido pedido) {
-		this.pedido = pedido;
+	public void setPedidos(List<Pedido> pedidos) {
+		this.pedidos = pedidos;
 	}
+
+	
 	
 	
 }

@@ -1,5 +1,7 @@
 package org.serratec.projetoFinal.domain;
 
+import java.util.List;
+
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.Entity;
@@ -19,7 +21,7 @@ public class Categoria {
 	
 	@JsonManagedReference
 	@OneToMany(mappedBy = "categoria")
-	private Produto produto;
+	private List<Produto> produtos;
 
 	public Long getId() {
 		return id;
@@ -37,13 +39,15 @@ public class Categoria {
 		this.nome = nome;
 	}
 
-	public Produto getProduto() {
-		return produto;
+	public List<Produto> getProdutos() {
+		return produtos;
 	}
 
-	public void setProduto(Produto produto) {
-		this.produto = produto;
+	public void setProdutos(List<Produto> produtos) {
+		this.produtos = produtos;
 	}
+
+	
 	
 	
 }
