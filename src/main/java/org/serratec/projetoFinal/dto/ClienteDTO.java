@@ -1,8 +1,10 @@
 package org.serratec.projetoFinal.dto;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.serratec.projetoFinal.domain.Cliente;
+import org.serratec.projetoFinal.domain.ClienteEndereco;
 import org.serratec.projetoFinal.domain.Endereco;
 import org.serratec.projetoFinal.domain.Pedido;
 
@@ -18,7 +20,7 @@ public class ClienteDTO {
 
 	private String cpf;
 	
-	private Endereco endereco;
+	private List<Endereco> enderecos;
 	
 	private List<Pedido> pedidos;
 
@@ -29,8 +31,12 @@ public class ClienteDTO {
 		this.telefone = cliente.getTelefone();
 		this.email = cliente.getEmail();
 		this.cpf = cliente.getCpf();
-		this.endereco = cliente.getEndereco(); // teste 
-		this.pedidos = cliente.getPedidos(); // teste	
+		this.pedidos = cliente.getPedidos(); // teste
+		this.enderecos = new ArrayList<>();
+		for (ClienteEndereco clienteEndereco : cliente.getEnderecos())
+		{ 
+			this.enderecos.add(clienteEndereco.getEndereco()); //teste
+		}
 	}
 
 
@@ -94,13 +100,13 @@ public class ClienteDTO {
 	}
 
 
-	public Endereco getEndereco() {
-		return endereco;
+	public List<Endereco> getEnderecos() {
+		return enderecos;
 	}
 
 
-	public void setEndereco(Endereco endereco) {
-		this.endereco = endereco;
+	public void setEnderecos(List<Endereco> enderecos) {
+		this.enderecos = enderecos;
 	}
 	
 	

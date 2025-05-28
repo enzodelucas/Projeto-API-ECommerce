@@ -1,9 +1,7 @@
 package org.serratec.projetoFinal.domain;
 
+import java.util.ArrayList;
 import java.util.List;
-
-import com.fasterxml.jackson.annotation.JsonBackReference;
-
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -24,13 +22,14 @@ public class Endereco {
 	
 	private String uf;
 	
+	private String localidade;
+	
 	private String complemento;
 	
 	private String logradouro;
 	
-	@JsonBackReference
 	@OneToMany(mappedBy = "endereco")
-	private List<Cliente> clientes;
+	private List<ClienteEndereco> clientes = new ArrayList<>();
 
 	public Long getId() {
 		return id;
@@ -78,6 +77,22 @@ public class Endereco {
 
 	public void setLogradouro(String logradouro) {
 		this.logradouro = logradouro;
+	}
+
+	public List<ClienteEndereco> getClientes() {
+		return clientes;
+	}
+
+	public void setClientes(List<ClienteEndereco> clientes) {
+		this.clientes = clientes;
+	}
+
+	public String getLocalidade() {
+		return localidade;
+	}
+
+	public void setLocalidade(String localidade) {
+		this.localidade = localidade;
 	}
 	
 	

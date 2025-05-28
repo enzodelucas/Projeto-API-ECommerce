@@ -1,5 +1,6 @@
 package org.serratec.projetoFinal.domain;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.serratec.projetoFinal.dto.ClienteInserirDTO;
@@ -10,7 +11,6 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 
 @Entity
@@ -34,9 +34,8 @@ public class Cliente {
 	@OneToMany(mappedBy = "cliente")
 	private List<Pedido> pedidos;
 
-	@JsonManagedReference
-	@ManyToOne
-	private Endereco endereco;
+	@OneToMany(mappedBy = "cliente")
+	private List<ClienteEndereco> enderecos = new ArrayList<>();
 	
 	public Cliente () {}
 
@@ -46,8 +45,6 @@ public class Cliente {
 		this.senha = clienteIns.getSenha();
 		this.cpf = clienteIns.getCpf();
 		this.telefone = clienteIns.getTelefone();
-		this.endereco = clienteIns.getEndereco();
-
 	}
 
 	public Long getId() {
@@ -106,12 +103,12 @@ public class Cliente {
 		this.senha = senha;
 	}
 
-	public Endereco getEndereco() {
-		return endereco;
+	public List<ClienteEndereco> getEnderecos() {
+		return enderecos;
 	}
 
-	public void setEndereco(Endereco endereco) {
-		this.endereco = endereco;
+	public void setEnderecos(List<ClienteEndereco> enderecos) {
+		this.enderecos = enderecos;
 	}
 
 

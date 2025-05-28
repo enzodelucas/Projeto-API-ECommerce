@@ -16,7 +16,7 @@ public class ClienteInserirDTO {
 
 	private String confirmaSenha;
 	
-	private Endereco endereco;
+	private String cep;
 
 
 	public String getNome() {
@@ -67,12 +67,13 @@ public class ClienteInserirDTO {
 		this.confirmaSenha = confirmaSenha;
 	}
 
-	public Endereco getEndereco() {
-		return endereco;
+	public String getCep() {
+		return cep;
 	}
 
-	public void setEndereco(Endereco endereco) {
-		this.endereco = endereco;
+	public void setCep(String cep) {
+		this.cep = cep;
 	}
+
 
 }

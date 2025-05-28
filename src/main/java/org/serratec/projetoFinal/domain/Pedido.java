@@ -2,6 +2,7 @@ package org.serratec.projetoFinal.domain;
 
 
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -40,9 +41,17 @@ public class Pedido {
 	
 	private LocalDate dataPedido;
 	
+	private BigDecimal valorFinal;
+	
 	@Enumerated(EnumType.STRING)
 	private Status status;
-
+	
+	@PrePersist
+	public void setarStatus () {
+		this.status = Status.PEDIDO_RECEBIDO;
+	}
+	
+	
 	public Long getId() {
 		return id;
 	}
@@ -76,10 +85,6 @@ public class Pedido {
 		this.dataPedido = dataPedido;
 	}
 	
-	@PrePersist
-	public void dataPedido() {
-		this.dataPedido = LocalDate.now();
-	}
 
 	public List<ProdutoPedido> getProdutos() {
 		return produtos;
@@ -88,8 +93,14 @@ public class Pedido {
 	public void setProdutos(List<ProdutoPedido> produtos) {
 		this.produtos = produtos;
 	}
-	
-	
+
+	public BigDecimal getValorFinal() {
+		return valorFinal;
+	}
+
+	public void setValorFinal(BigDecimal valorFinal) {
+		this.valorFinal = valorFinal;
+	}
 	
 	
 }
