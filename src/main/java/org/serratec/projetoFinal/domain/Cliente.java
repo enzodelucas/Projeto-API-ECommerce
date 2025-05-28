@@ -2,6 +2,8 @@ package org.serratec.projetoFinal.domain;
 
 import java.util.List;
 
+import org.serratec.projetoFinal.dto.ClienteInserirDTO;
+
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.Entity;
@@ -17,22 +19,36 @@ public class Cliente {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
+
 	private String nome;
-	
+
 	private String telefone;
-	
+
 	private String email;
-	
+
 	private String cpf;
-	
+
+	private String senha;
+
 	@JsonManagedReference
 	@OneToMany(mappedBy = "cliente")
 	private List<Pedido> pedidos;
-	
+
 	@JsonManagedReference
 	@ManyToOne
 	private Endereco endereco;
+	
+	public Cliente () {}
+
+	public Cliente (ClienteInserirDTO clienteIns) {
+		this.nome = clienteIns.getNome();
+		this.email = clienteIns.getEmail();
+		this.senha = clienteIns.getSenha();
+		this.cpf = clienteIns.getCpf();
+		this.telefone = clienteIns.getTelefone();
+		this.endereco = clienteIns.getEndereco();
+
+	}
 
 	public Long getId() {
 		return id;
@@ -82,7 +98,23 @@ public class Cliente {
 		this.pedidos = pedidos;
 	}
 
-	
-	
-	
+	public String getSenha() {
+		return senha;
+	}
+
+	public void setSenha(String senha) {
+		this.senha = senha;
+	}
+
+	public Endereco getEndereco() {
+		return endereco;
+	}
+
+	public void setEndereco(Endereco endereco) {
+		this.endereco = endereco;
+	}
+
+
+
+
 }
