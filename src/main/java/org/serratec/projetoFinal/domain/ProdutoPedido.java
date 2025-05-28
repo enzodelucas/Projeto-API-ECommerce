@@ -4,6 +4,8 @@ import java.math.BigDecimal;
 
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 
 @Entity
@@ -12,6 +14,7 @@ public class ProdutoPedido {
 	@EmbeddedId
 	private ProdutoPedidoPK id = new ProdutoPedidoPK();
 
+	@NotNull(message = "A quantidade não pode ser vazia.")
 	private Integer quantidade;
 	
 	private BigDecimal valor;

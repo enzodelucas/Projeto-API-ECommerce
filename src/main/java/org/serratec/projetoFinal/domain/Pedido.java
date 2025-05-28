@@ -7,6 +7,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.serratec.projetoFinal.enuns.FormaPgto;
 import org.serratec.projetoFinal.enuns.Status;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
@@ -36,6 +37,10 @@ public class Pedido {
 	@JoinColumn(name = "id_cliente")
 	private Cliente cliente;
 	
+	@ManyToOne
+	@JoinColumn(name = "id_enderecoEntrega")
+	private ClienteEndereco enderecoEntrega;
+	
 	@OneToMany(mappedBy = "id.pedido", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	private List<ProdutoPedido> produtos = new ArrayList<>();
 	
@@ -44,14 +49,17 @@ public class Pedido {
 	private BigDecimal valorFinal;
 	
 	@Enumerated(EnumType.STRING)
+	private FormaPgto formaPgto;
+	
+	@Enumerated(EnumType.STRING)
 	private Status status;
 	
 	@PrePersist
-	public void setarStatus () {
+	public void setarPadrao () {
 		this.status = Status.PEDIDO_RECEBIDO;
+		this.dataPedido = LocalDate.now();
 	}
-	
-	
+
 	public Long getId() {
 		return id;
 	}
@@ -68,23 +76,13 @@ public class Pedido {
 		this.cliente = cliente;
 	}
 
-
-	public Status getStatus() {
-		return status;
+	public ClienteEndereco getEnderecoEntrega() {
+		return enderecoEntrega;
 	}
 
-	public void setStatus(Status status) {
-		this.status = status;
+	public void setEnderecoEntrega(ClienteEndereco enderecoEntrega) {
+		this.enderecoEntrega = enderecoEntrega;
 	}
-
-	public LocalDate getDataPedido() {
-		return dataPedido;
-	}
-
-	public void setDataPedido(LocalDate dataPedido) {
-		this.dataPedido = dataPedido;
-	}
-	
 
 	public List<ProdutoPedido> getProdutos() {
 		return produtos;
@@ -94,6 +92,14 @@ public class Pedido {
 		this.produtos = produtos;
 	}
 
+	public LocalDate getDataPedido() {
+		return dataPedido;
+	}
+
+	public void setDataPedido(LocalDate dataPedido) {
+		this.dataPedido = dataPedido;
+	}
+
 	public BigDecimal getValorFinal() {
 		return valorFinal;
 	}
@@ -101,6 +107,25 @@ public class Pedido {
 	public void setValorFinal(BigDecimal valorFinal) {
 		this.valorFinal = valorFinal;
 	}
+
+	public FormaPgto getFormaPgto() {
+		return formaPgto;
+	}
+
+	public void setFormaPgto(FormaPgto formaPgto) {
+		this.formaPgto = formaPgto;
+	}
+
+	public Status getStatus() {
+		return status;
+	}
+
+	public void setStatus(Status status) {
+		this.status = status;
+	}
+	
+
+	
 	
 	
 }

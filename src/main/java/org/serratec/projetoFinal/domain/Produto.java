@@ -11,6 +11,9 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 
 @Entity
 public class Produto {
@@ -19,7 +22,8 @@ public class Produto {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	@Column(unique = true) 
+	@NotBlank(message = "O nome não pode ser vazio.")
+	@Size(max = 200, message = "O nome não pode passar de {max} caracteres.")
 	private String nome;
 	
 	@JsonBackReference
@@ -27,8 +31,11 @@ public class Produto {
 	@JoinColumn(name = "id_categoria")
 	private Categoria categoria;
 	
+	@NotNull(message = "O valor do produto não pode ser vazio.")
 	private BigDecimal valor;
 	
+	@NotBlank(message = "A descrição não pode ser vazia.")
+	@Size(min = 10, max = 2000, message = "A descrição deve ter no mínimo {min} caracteres e no máximo {max} caracteres.")
 	private String descricao;
 	
 

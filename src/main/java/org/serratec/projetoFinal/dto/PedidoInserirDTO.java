@@ -4,9 +4,11 @@ import java.util.List;
 
 public class PedidoInserirDTO {
 
-	private List<String> nomeProdutos;
+	private List<Long> idProdutos;
 	
 	private String apelidoEnderecoEntrega;
+	
+	
 	
 	
 }
