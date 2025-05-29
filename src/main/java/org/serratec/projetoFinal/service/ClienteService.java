@@ -30,9 +30,6 @@ public class ClienteService {
 	private MailConfig mailConfig;
 	
     
-  
-
-
 	public ClienteDTO inserir(ClienteInserirDTO clienteIns) 
 			throws EmailException, SenhaException, CpfException {
 		if (clienteRepository.findByEmail(clienteIns.getEmail()) != null) {

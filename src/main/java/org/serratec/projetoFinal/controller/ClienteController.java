@@ -5,11 +5,13 @@ import java.util.List;
 
 import org.serratec.projetoFinal.dto.ClienteDTO;
 import org.serratec.projetoFinal.dto.ClienteInserirDTO;
-import org.serratec.projetoFinal.repository.ClienteRepository;
+import org.serratec.projetoFinal.dto.EnderecoClienteDTO;
+import org.serratec.projetoFinal.dto.EnderecoDTO;
+import org.serratec.projetoFinal.dto.EnderecoInserirDTO;
 import org.serratec.projetoFinal.service.ClienteService;
+import org.serratec.projetoFinal.service.EnderecoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -26,6 +28,9 @@ public class ClienteController {
 	@Autowired
 	ClienteService clienteService;
 	
+	@Autowired
+	EnderecoService enderecoService;
+	
 	@PostMapping
 	public ResponseEntity<ClienteDTO> inserirCliente(@Valid @RequestBody ClienteInserirDTO clienteIns) {
 		ClienteDTO clienteDTO = clienteService.inserir(clienteIns);
@@ -40,6 +45,15 @@ public class ClienteController {
 	@GetMapping
 	public ResponseEntity<List<ClienteDTO>> listarClientes() {
 		return ResponseEntity.ok(clienteService.listar());
+	}
+	
+	//colocar autenticação 
+	@PostMapping("/InserirEndereco")
+	public ResponseEntity<EnderecoClienteDTO> inserirEndereco(@Valid @RequestBody EnderecoInserirDTO enderecoIns) {
+		EnderecoDTO enderecoDTO = enderecoService.buscar(enderecoIns.getCep());
+		return null;
+		
+		
 	}
 	
 }

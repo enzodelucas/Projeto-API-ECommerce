@@ -9,7 +9,7 @@ public class PedidoInserirDTO {
 
 	private List<ProdutoExemplo> produto;
 	
-	private String apelidoEnderecoEntrega;
+	private Long idEndereco;
 	
 	private FormaPgto formaPgto;
 
@@ -23,12 +23,13 @@ public class PedidoInserirDTO {
 		this.produto = produto;
 	}
 
-	public String getApelidoEnderecoEntrega() {
-		return apelidoEnderecoEntrega;
+	
+	public Long getIdEndereco() {
+		return idEndereco;
 	}
 
-	public void setApelidoEnderecoEntrega(String apelidoEnderecoEntrega) {
-		this.apelidoEnderecoEntrega = apelidoEnderecoEntrega;
+	public void setIdEndereco(Long idEndereco) {
+		this.idEndereco = idEndereco;
 	}
 
 	public FormaPgto getFormaPgto() {

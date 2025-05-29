@@ -19,8 +19,6 @@ public class ClienteEndereco {
 	@ManyToOne
 	private Endereco endereco;
 	
-	private String apelido;
-
 	public Long getId() {
 		return id;
 	}
@@ -45,15 +43,4 @@ public class ClienteEndereco {
 		this.endereco = endereco;
 	}
 
-	public String getApelido() {
-		return apelido;
-	}
-
-	public void setApelido(String apelido) {
-		this.apelido = apelido;
-	}
-	
-	
-	
-	
 }

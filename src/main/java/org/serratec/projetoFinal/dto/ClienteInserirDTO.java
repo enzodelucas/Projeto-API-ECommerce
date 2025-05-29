@@ -33,7 +33,7 @@ public class ClienteInserirDTO {
 
 	private String confirmaSenha;
 	
-	private String cep;
+	private EnderecoInserirDTO enderecoInsDTO;
 
 
 	public String getNome() {
@@ -84,13 +84,14 @@ public class ClienteInserirDTO {
 		this.confirmaSenha = confirmaSenha;
 	}
 
-	public String getCep() {
-		return cep;
+	public EnderecoInserirDTO getEnderecoInsDTO() {
+		return enderecoInsDTO;
 	}
 
-	public void setCep(String cep) {
-		this.cep = cep;
+	public void setEnderecoInsDTO(EnderecoInserirDTO enderecoInsDTO) {
+		this.enderecoInsDTO = enderecoInsDTO;
 	}
 
+	
 
 }
