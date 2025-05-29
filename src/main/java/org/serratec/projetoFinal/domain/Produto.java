@@ -2,6 +2,8 @@ package org.serratec.projetoFinal.domain;
 
 import java.math.BigDecimal;
 
+import org.serratec.projetoFinal.dto.ProdutoInserirDTO;
+
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import jakarta.persistence.Column;
@@ -21,23 +23,31 @@ public class Produto {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
+
 	@NotBlank(message = "O nome não pode ser vazio.")
 	@Size(max = 200, message = "O nome não pode passar de {max} caracteres.")
 	private String nome;
-	
+
 	@JsonBackReference
 	@ManyToOne
 	@JoinColumn(name = "id_categoria")
 	private Categoria categoria;
-	
+
 	@NotNull(message = "O valor do produto não pode ser vazio.")
 	private BigDecimal valor;
-	
+
 	@NotBlank(message = "A descrição não pode ser vazia.")
 	@Size(min = 10, max = 2000, message = "A descrição deve ter no mínimo {min} caracteres e no máximo {max} caracteres.")
 	private String descricao;
-	
+
+	public Produto() {
+	}
+
+	public Produto(ProdutoInserirDTO produtoIns) {
+		this.nome = produtoIns.getNome();
+		this.valor = produtoIns.getValor();
+		this.descricao = produtoIns.getCategoria();
+	}
 
 	public Long getId() {
 		return id;
@@ -78,6 +88,5 @@ public class Produto {
 	public void setDescricao(String descricao) {
 		this.descricao = descricao;
 	}
-	
-	
+
 }
