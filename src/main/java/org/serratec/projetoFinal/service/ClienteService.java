@@ -36,10 +36,11 @@ public class ClienteService {
 		}
 
 		Cliente cliente = new Cliente(clienteIns);
-
+		
+		cliente = clienteRepository.save(cliente);
+		
 		ClienteDTO clienteDTO = new ClienteDTO(cliente);
 
-		clienteRepository.save(cliente);
 
 		return clienteDTO;
 
