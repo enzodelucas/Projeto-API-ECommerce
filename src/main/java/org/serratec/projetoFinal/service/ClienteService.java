@@ -3,6 +3,8 @@ package org.serratec.projetoFinal.service;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.serratec.projetoFinal.config.MailConfig;
+import org.serratec.projetoFinal.config.MailConfig;
 import org.serratec.projetoFinal.domain.Cliente;
 import org.serratec.projetoFinal.dto.ClienteDTO;
 import org.serratec.projetoFinal.dto.ClienteInserirDTO;
@@ -17,11 +19,19 @@ import org.springframework.stereotype.Service;
 @Service
 public class ClienteService {
 
+
 	@Autowired
 	private ClienteRepository clienteRepository;
 
 	@Autowired
 	private EnderecoRepository enderecoRepository;
+   
+	@Autowired
+	private MailConfig mailConfig;
+	
+    
+  
+
 
 	public ClienteDTO inserir(ClienteInserirDTO clienteIns) 
 			throws EmailException, SenhaException, CpfException {
@@ -39,8 +49,10 @@ public class ClienteService {
 		
 		cliente = clienteRepository.save(cliente);
 		
+		mailConfig.sendEmail(cliente.getEmail(), "Cadastro de Cliente", cliente.toString());
+		
 		ClienteDTO clienteDTO = new ClienteDTO(cliente);
-
+		
 
 		return clienteDTO;
 

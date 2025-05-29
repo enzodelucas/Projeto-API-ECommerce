@@ -26,7 +26,7 @@ public class ProdutoService {
 		Produto produto = new Produto(produtoIns);
 		produto.setCategoria(categoria);
 		
-		categoriaRepository.findByNomeIgnoreCase(produtoIns.getCategoria()).getProdutos().add(produto);
+		categoria.getProdutos().add(produto);
 		
 		return produtoRepository.save(produto);
 		

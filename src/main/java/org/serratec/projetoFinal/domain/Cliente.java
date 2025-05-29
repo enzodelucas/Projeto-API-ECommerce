@@ -117,6 +117,14 @@ public class Cliente {
 		this.enderecos = enderecos;
 	}
 
+	@Override
+	public String toString() {
+        return "*Nome: " + nome + 
+                "\n*E-mail: " + email;
+    }
+	
+	
+
 
 
 
