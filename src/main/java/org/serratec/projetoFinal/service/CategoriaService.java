@@ -18,7 +18,7 @@ public class CategoriaService {
 	
 	
 	public Categoria inserir(Categoria categoria) throws CategoriaException {
-		if(categoriaRepository.findByNome(categoria.getNome()) != null) {
+		if(categoriaRepository.findByNomeIgnoreCase(categoria.getNome()) != null) {
 			throw new CategoriaException("Esta categoria já está cadastrada.");
 		}
 		return categoriaRepository.save(categoria);

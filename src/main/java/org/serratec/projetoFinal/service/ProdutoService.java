@@ -19,13 +19,17 @@ public class ProdutoService {
 	CategoriaRepository categoriaRepository;
 
 	public Produto inserir(ProdutoInserirDTO produtoIns) throws CategoriaException {
-		Categoria categoria = categoriaRepository.findByNome(produtoIns.getCategoria());
+		Categoria categoria = categoriaRepository.findByNomeIgnoreCase(produtoIns.getCategoria());
 		if (categoria == null) {
 			throw new CategoriaException("Categoria inválida");
 		}
 		Produto produto = new Produto(produtoIns);
 		produto.setCategoria(categoria);
+		
+		categoriaRepository.findByNomeIgnoreCase(produtoIns.getCategoria()).getProdutos().add(produto);
+		
 		return produtoRepository.save(produto);
+		
 
 	}
 }

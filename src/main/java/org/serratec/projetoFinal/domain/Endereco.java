@@ -9,6 +9,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
 
 @Entity
 public class Endereco {
@@ -18,6 +19,7 @@ public class Endereco {
 	private Long id;
 	
 	@NotBlank(message = "O cep deve ser preenchido.")
+	@Pattern (regexp = "^[0-9]{8}$", message = "O CEP deve conter 8 dígitos numericos.")
 	private String cep;
 	
 	private String bairro;
