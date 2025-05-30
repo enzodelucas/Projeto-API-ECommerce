@@ -1,3 +1,4 @@
+/*
 package org.serratec.projetoFinal.config.secutiry;
 
 import java.util.Date;
@@ -60,3 +61,4 @@ public class JwtUtil {
 	}
 	
 }
+*/

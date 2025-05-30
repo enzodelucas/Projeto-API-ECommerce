@@ -1,0 +1,67 @@
+package org.serratec.projetoFinal.dto;
+
+import java.math.BigDecimal;
+
+import org.serratec.projetoFinal.domain.Produto;
+
+public class ProdutoDTO {
+
+	private Long id;
+
+	private String nome;
+
+	private String categoria;
+
+	private BigDecimal valor;
+
+	private String descricao;
+
+	public ProdutoDTO(Produto produto) {
+		this.id = produto.getId();
+		this.nome = produto.getNome();
+		this.valor = produto.getValor();
+		this.categoria = produto.getCategoria().getNome();
+		this.descricao = produto.getDescricao();
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public String getNome() {
+		return nome;
+	}
+
+	public void setNome(String nome) {
+		this.nome = nome;
+	}
+
+	public String getCategoria() {
+		return categoria;
+	}
+
+	public void setCategoria(String categoria) {
+		this.categoria = categoria;
+	}
+
+	public BigDecimal getValor() {
+		return valor;
+	}
+
+	public void setValor(BigDecimal valor) {
+		this.valor = valor;
+	}
+
+	public String getDescricao() {
+		return descricao;
+	}
+
+	public void setDescricao(String descricao) {
+		this.descricao = descricao;
+	}
+
+}

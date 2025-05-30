@@ -36,7 +36,7 @@ public class CategoriaService {
 			return categoriaRepository.save(c);
 		}
 		
-		throw new CategoriaException("Categoria não encontrada");
+		return null;
 
 	}
 }

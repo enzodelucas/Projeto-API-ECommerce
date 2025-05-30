@@ -41,7 +41,8 @@ public class Produto {
 	public Produto(ProdutoInserirDTO produtoIns) {
 		this.nome = produtoIns.getNome();
 		this.valor = produtoIns.getValor();
-		this.descricao = produtoIns.getCategoria();
+		this.descricao = produtoIns.getDescricao();
+		
 	}
 
 	public Long getId() {
