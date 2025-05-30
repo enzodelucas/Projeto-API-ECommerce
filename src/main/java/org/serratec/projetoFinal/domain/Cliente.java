@@ -20,7 +20,7 @@ import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 
 @Entity
-public class Cliente {
+public class Cliente extends Usuario{
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,11 +30,9 @@ public class Cliente {
 
 	private String telefone;
 
-	private String email;
-
 	private String cpf;
 
-	private String senha;
+	//private String senha;
 
 	@JsonManagedReference
 	@OneToMany(mappedBy = "cliente")
@@ -46,9 +44,8 @@ public class Cliente {
 	public Cliente () {}
 
 	public Cliente (ClienteInserirDTO clienteIns) {
+		super(clienteIns.getEmail(), clienteIns.getSenha());
 		this.nome = clienteIns.getNome();
-		this.email = clienteIns.getEmail();
-		this.senha = clienteIns.getSenha();
 		this.cpf = clienteIns.getCpf();
 		this.telefone = clienteIns.getTelefone();
 	}
@@ -76,15 +73,7 @@ public class Cliente {
 	public void setTelefone(String telefone) {
 		this.telefone = telefone;
 	}
-
-	public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
-	}
-
+	
 	public String getCpf() {
 		return cpf;
 	}
@@ -101,14 +90,6 @@ public class Cliente {
 		this.pedidos = pedidos;
 	}
 
-	public String getSenha() {
-		return senha;
-	}
-
-	public void setSenha(String senha) {
-		this.senha = senha;
-	}
-
 	public List<ClienteEndereco> getEnderecos() {
 		return enderecos;
 	}
@@ -119,8 +100,7 @@ public class Cliente {
 
 	@Override
 	public String toString() {
-        return "*Nome: " + nome + 
-                "\n*E-mail: " + email;
+        return "mudar depois";
     }
 	
 	

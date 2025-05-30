@@ -1,6 +1,6 @@
-package org.serratec.projetoFinal.domain;
+package org.serratec.projetoFinal.dto;
 
-public class ProdutoExemplo {
+public class ProdutoInserir {
 	
 	private Long id;
 	

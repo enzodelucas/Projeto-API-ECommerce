@@ -3,6 +3,7 @@ package org.serratec.projetoFinal.dto;
 import org.serratec.projetoFinal.domain.Funcionario;
 
 public class FuncionarioDTO {
+	
 	private Long id;
 
 	private String nome;

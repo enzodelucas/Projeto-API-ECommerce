@@ -2,7 +2,6 @@ package org.serratec.projetoFinal.dto;
 
 import java.util.List;
 
-import org.serratec.projetoFinal.domain.ProdutoExemplo;
 import org.serratec.projetoFinal.enuns.FormaPgto;
 
 import jakarta.validation.constraints.NotBlank;
@@ -10,7 +9,7 @@ import jakarta.validation.constraints.NotNull;
 
 public class PedidoInserirDTO {
 
-	private List<ProdutoExemplo> produto;
+	private List<ProdutoInserir> produto;
 	
 	@NotNull(message = "É necessário um Id de endereço para realizar seu pedido.")
 	private Long idEndereco;
@@ -19,11 +18,11 @@ public class PedidoInserirDTO {
 
 	
 	
-	public List<ProdutoExemplo> getProduto() {
+	public List<ProdutoInserir> getProduto() {
 		return produto;
 	}
 
-	public void setProduto(List<ProdutoExemplo> produto) {
+	public void setProduto(List<ProdutoInserir> produto) {
 		this.produto = produto;
 	}
 

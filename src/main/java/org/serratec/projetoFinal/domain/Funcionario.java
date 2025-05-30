@@ -1,12 +1,14 @@
 package org.serratec.projetoFinal.domain;
 
+import org.serratec.projetoFinal.dto.FuncionarioInserirDTO;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
 @Entity
-public class Funcionario {
+public class Funcionario extends Usuario{
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -15,14 +17,19 @@ public class Funcionario {
 	private String nome;
 
 	private String telefone;
-
-	private String email;
-
+	
 	private String cpf;
 
-	private String senha;
-	
 	private String cargo;
+	
+
+	public Funcionario(FuncionarioInserirDTO funcionarioIns) {
+		super(funcionarioIns.getEmail(), funcionarioIns.getSenha());
+		this.nome = funcionarioIns.getNome();
+		this.telefone = funcionarioIns.getTelefone();
+		this.cpf = funcionarioIns.getCpf();
+		this.cargo = funcionarioIns.getCargo();
+	}
 
 	public Long getId() {
 		return id;
@@ -48,14 +55,6 @@ public class Funcionario {
 		this.telefone = telefone;
 	}
 
-	public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
-	}
-
 	public String getCpf() {
 		return cpf;
 	}
@@ -64,13 +63,6 @@ public class Funcionario {
 		this.cpf = cpf;
 	}
 
-	public String getSenha() {
-		return senha;
-	}
-
-	public void setSenha(String senha) {
-		this.senha = senha;
-	}
 
 	public String getCargo() {
 		return cargo;
@@ -80,11 +72,5 @@ public class Funcionario {
 		this.cargo = cargo;
 	}
 	
-	@Override
-	public String toString() {
-        return "*Nome: " + nome + 
-                "\n*E-mail: " + email +
-                 "\n*Cargo: " + cargo;
-    }
 	
 }

@@ -35,7 +35,6 @@ public class ControllerExceptionHandler extends ResponseEntityExceptionHandler {
 			HttpHeaders headers, HttpStatusCode status, WebRequest request) {
 		List<String> erros = new ArrayList<>();
 		erros.add(ex.getMessage() + ": " + ex.getMostSpecificCause());
-		//)
 		ErroResposta erroResposta = new ErroResposta(status.value(), "Confira a formatação do JSON", LocalDateTime.now(), erros);
 return super.handleExceptionInternal(ex, erroResposta, headers, status, request);
 	}
