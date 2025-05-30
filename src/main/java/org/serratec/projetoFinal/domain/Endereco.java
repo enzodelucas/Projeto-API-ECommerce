@@ -3,6 +3,8 @@ package org.serratec.projetoFinal.domain;
 import java.util.ArrayList;
 import java.util.List;
 
+import ch.qos.logback.core.subst.Token.Type;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -28,11 +30,9 @@ public class Endereco {
 	
 	private String localidade;
 	
-	private String complemento;
-	
 	private String logradouro;
 	
-	@OneToMany(mappedBy = "endereco")
+	@OneToMany(mappedBy = "endereco", cascade = CascadeType.ALL)
 	private List<ClienteEndereco> clientes = new ArrayList<>();
 
 	public Long getId() {
@@ -67,13 +67,6 @@ public class Endereco {
 		this.uf = uf;
 	}
 
-	public String getComplemento() {
-		return complemento;
-	}
-
-	public void setComplemento(String complemento) {
-		this.complemento = complemento;
-	}
 
 	public String getLogradouro() {
 		return logradouro;

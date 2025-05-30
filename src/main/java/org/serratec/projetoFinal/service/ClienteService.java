@@ -2,6 +2,7 @@ package org.serratec.projetoFinal.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.serratec.projetoFinal.config.MailConfig;
 import org.serratec.projetoFinal.config.MailConfig;
@@ -62,6 +63,16 @@ public class ClienteService {
 			clienteDTO.add(new ClienteDTO(cliente));
 		}
 		return clienteDTO;
+	}
+	
+	//teste, favor corrigir depois
+	public Cliente listarId(Long id) {
+		 Optional<Cliente> nome = clienteRepository.findById(id);
+		 if(nome.isPresent()) {
+			 Cliente cliente = nome.get();
+			 return cliente;
+		 }
+		 return null;
 	}
 
 }

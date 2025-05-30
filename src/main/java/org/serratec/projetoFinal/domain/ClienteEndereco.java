@@ -19,6 +19,13 @@ public class ClienteEndereco {
 	@ManyToOne
 	private Endereco endereco;
 	
+	
+	
+	public ClienteEndereco(Cliente cliente,Endereco endereco) {
+		this.cliente = cliente;
+		this.endereco = endereco;
+	}
+
 	public Long getId() {
 		return id;
 	}

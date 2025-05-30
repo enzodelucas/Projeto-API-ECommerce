@@ -15,7 +15,7 @@ public class EnderecoService {
 	@Autowired
 	EnderecoRepository enderecoRepository;
 
-	public EnderecoDTO buscar(String cep) {
+	public EnderecoDTO buscarInserir(String cep) {
 		Optional<Endereco> enderecoOpt = enderecoRepository.findByCep(cep);
 		if (enderecoOpt.isPresent()) {
 			EnderecoDTO enderecoDTO = new EnderecoDTO(enderecoOpt.get());
@@ -38,8 +38,36 @@ public class EnderecoService {
 	
 	public EnderecoDTO inserir(Endereco endereco) {
 		endereco = enderecoRepository.save(endereco);
-		EnderecoDTO enderecoDTO = new EnderecoDTO(endereco);
-		return enderecoDTO;
+		EnderecoDTO enderecoDto = new EnderecoDTO(endereco);
+		return enderecoDto;
+	}
+	
+	public Endereco buscarInserirTeste(String cep) {
+		Optional<Endereco> enderecoOpt = enderecoRepository.findByCep(cep);
+		if (enderecoOpt.isPresent()) {
+			//Endereco enderecoDTO = new Endereco(enderecoOpt.get());
+			return enderecoOpt.get();
+		} else {
+			RestTemplate restTemplate = new RestTemplate();
+			String url = "http://viacep.com.br/ws/" + cep + "/json/";
+			Optional<Endereco> enderecoViaCepOpt = Optional.ofNullable(restTemplate.getForObject(url, Endereco.class));
+			if (enderecoViaCepOpt.isPresent() && enderecoViaCepOpt.get().getCep() != null) {
+				Endereco enderecoViaCep = enderecoViaCepOpt.get();
+				String cepSemTraco = enderecoViaCep.getCep().replaceAll("-", "");
+				enderecoViaCep.setCep(cepSemTraco);
+				return inserirTeste(enderecoViaCep);
+			} else {
+				return null;
+			}
+		}
+		
+	}
+	
+	
+	public Endereco inserirTeste(Endereco endereco) {
+		endereco = enderecoRepository.save(endereco);
+		//Endereco endereco = new EnderecoDTO(endereco);
+		return endereco;
 	}
 	
 }

@@ -11,8 +11,6 @@ public class EnderecoDTO {
 	
 	private String localidade;
 	
-	private String complemento;
-	
 	private String logradouro;
 	
 	public EnderecoDTO(Endereco endereco) {
@@ -20,7 +18,6 @@ public class EnderecoDTO {
 		this.bairro = endereco.getBairro();
 		this.uf = endereco.getUf();
 		this.localidade = endereco.getLocalidade();
-		this.complemento = endereco.getComplemento();
 		this.logradouro = endereco.getLogradouro();
 	}
 
@@ -56,13 +53,6 @@ public class EnderecoDTO {
 		this.localidade = localidade;
 	}
 
-	public String getComplemento() {
-		return complemento;
-	}
-
-	public void setComplemento(String complemento) {
-		this.complemento = complemento;
-	}
 
 	public String getLogradouro() {
 		return logradouro;
