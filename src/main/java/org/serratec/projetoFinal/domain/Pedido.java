@@ -47,13 +47,15 @@ public class Pedido {
 	
 	private LocalDate dataPedido;
 	
-	private BigDecimal valorFinal;
+	private Double valorFinal;
 	
 	@Enumerated(EnumType.STRING)
 	private FormaPgto formaPgto;
 	
 	@Enumerated(EnumType.STRING)
 	private Status status;
+	
+	private Double desconto;
 	
 	@PrePersist
 	public void setarPadrao () {
@@ -101,11 +103,11 @@ public class Pedido {
 		this.dataPedido = dataPedido;
 	}
 
-	public BigDecimal getValorFinal() {
+	public Double getValorFinal() {
 		return valorFinal;
 	}
 
-	public void setValorFinal(BigDecimal valorFinal) {
+	public void setValorFinal(Double valorFinal) {
 		this.valorFinal = valorFinal;
 	}
 
@@ -123,6 +125,14 @@ public class Pedido {
 
 	public void setStatus(Status status) {
 		this.status = status;
+	}
+
+	public Double getDesconto() {
+		return desconto;
+	}
+
+	public void setDesconto(Double desconto) {
+		this.desconto = desconto;
 	}
 	
 

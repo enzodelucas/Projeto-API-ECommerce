@@ -1,7 +1,5 @@
 package org.serratec.projetoFinal.dto;
 
-import java.math.BigDecimal;
-
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -13,7 +11,7 @@ public class ProdutoInserirDTO {
 	private String nome;
 	
 	@NotNull(message = "O valor do produto não pode ser vazio.")
-	private BigDecimal valor;
+	private Double valor;
 	
 	@NotBlank(message = "A descrição não pode ser vazia.")
 	@Size(min = 10, max = 2000, message = "A descrição deve ter no mínimo {min} caracteres e no máximo {max} caracteres.")
@@ -41,11 +39,11 @@ public class ProdutoInserirDTO {
 		this.nome = nome;
 	}
 
-	public BigDecimal getValor() {
+	public Double getValor() {
 		return valor;
 	}
 
-	public void setValor(BigDecimal valor) {
+	public void setValor(Double valor) {
 		this.valor = valor;
 	}
 

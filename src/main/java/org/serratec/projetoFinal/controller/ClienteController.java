@@ -56,7 +56,7 @@ public class ClienteController {
 	}
 	
 	//colocar autenticação 
-	@PostMapping("/InserirEndereco/{id}")
+	/*@PostMapping("/InserirEndereco/{id}")
 	public ResponseEntity<EnderecoDTO> inserirEndereco(@PathVariable Long id, @Valid @RequestBody EnderecoInserirDTO enderecoIns) {	
 		Cliente cliente = clienteService.listarId(id);
 		Endereco endereco = enderecoService.buscarInserirTeste(enderecoIns.getCep());	
@@ -71,6 +71,6 @@ public class ClienteController {
 				.toUri();
 		return ResponseEntity.created(uri).body(enderecoDTO);
 		
-	}
+	}*/ //CORRIGIR 
 	
 }

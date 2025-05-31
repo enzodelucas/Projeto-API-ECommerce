@@ -31,7 +31,7 @@ public class Produto {
 	@JoinColumn(name = "id_categoria")
 	private Categoria categoria;
 
-	private BigDecimal valor;
+	private Double valor;
 
 	private String descricao;
 
@@ -69,11 +69,11 @@ public class Produto {
 		this.categoria = categoria;
 	}
 
-	public BigDecimal getValor() {
+	public Double getValor() {
 		return valor;
 	}
 
-	public void setValor(BigDecimal valor) {
+	public void setValor(Double valor) {
 		this.valor = valor;
 	}
 

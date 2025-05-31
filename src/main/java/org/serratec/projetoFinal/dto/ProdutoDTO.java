@@ -1,7 +1,5 @@
 package org.serratec.projetoFinal.dto;
 
-import java.math.BigDecimal;
-
 import org.serratec.projetoFinal.domain.Produto;
 
 public class ProdutoDTO {
@@ -12,7 +10,7 @@ public class ProdutoDTO {
 
 	private String categoria;
 
-	private BigDecimal valor;
+	private Double valor;
 
 	private String descricao;
 
@@ -48,11 +46,11 @@ public class ProdutoDTO {
 		this.categoria = categoria;
 	}
 
-	public BigDecimal getValor() {
+	public Double getValor() {
 		return valor;
 	}
 
-	public void setValor(BigDecimal valor) {
+	public void setValor(Double valor) {
 		this.valor = valor;
 	}
 

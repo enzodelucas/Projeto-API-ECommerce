@@ -1,10 +1,7 @@
 package org.serratec.projetoFinal.domain;
 
-import java.math.BigDecimal;
-
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
-import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
 
@@ -17,23 +14,18 @@ public class ProdutoPedido {
 	@NotNull(message = "A quantidade não pode ser vazia.")
 	private Integer quantidade;
 	
-	private BigDecimal valor;
-	
-	private BigDecimal desconto;
-	
+	private Double valor = id.getProduto().getValor() * quantidade;
 	
 	
 	
 	public ProdutoPedido () {}
 
 
-	public ProdutoPedido(Pedido pedido, Produto produto, Integer quantidade, BigDecimal valor,
-			BigDecimal desconto) {
+	public ProdutoPedido(Pedido pedido, Produto produto, Integer quantidade, Double valor) {
 		this.id.setPedido(pedido);
 		this.id.setProduto(produto);
 		this.quantidade = quantidade;
 		this.valor = valor;
-		this.desconto = desconto;
 	}
 
 
@@ -68,24 +60,15 @@ public class ProdutoPedido {
 	}
 
 
-	public BigDecimal getValor() {
+	public Double getValor() {
 		return valor;
 	}
 
 
-	public void setValor(BigDecimal valor) {
+	public void setValor(Double valor) {
 		this.valor = valor;
 	}
 
-
-	public BigDecimal getDesconto() {
-		return desconto;
-	}
-
-
-	public void setDesconto(BigDecimal desconto) {
-		this.desconto = desconto;
-	}
 	
 	
 	

@@ -66,11 +66,12 @@ public class ClienteService {
 	}
 	
 	//teste, favor corrigir depois
-	public Cliente listarId(Long id) {
+	public ClienteDTO listarId(Long id) {
 		 Optional<Cliente> nome = clienteRepository.findById(id);
 		 if(nome.isPresent()) {
 			 Cliente cliente = nome.get();
-			 return cliente;
+			 ClienteDTO clienteDTO = new ClienteDTO(cliente);
+			 return clienteDTO;
 		 }
 		 return null;
 	}
