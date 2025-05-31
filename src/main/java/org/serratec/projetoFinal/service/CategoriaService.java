@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import org.serratec.projetoFinal.domain.Categoria;
 import org.serratec.projetoFinal.exception.CategoriaException;
+import org.serratec.projetoFinal.exception.NaoEncontradoException;
 import org.serratec.projetoFinal.repository.CategoriaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -36,7 +37,7 @@ public class CategoriaService {
 			return categoriaRepository.save(c);
 		}
 		
-		return null;
+		throw new NaoEncontradoException("Categoria não foi encontrada");
 
 	}
 }

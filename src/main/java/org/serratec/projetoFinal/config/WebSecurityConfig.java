@@ -7,19 +7,26 @@ import org.serratec.projetoFinal.config.security.JwtAuthorizationFilter;
 import org.serratec.projetoFinal.config.security.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
+@Configuration
+@EnableWebSecurity
 public class WebSecurityConfig {
 
 	@Autowired
@@ -57,6 +64,8 @@ public class WebSecurityConfig {
         .authorizeHttpRequests(authorize -> 
             authorize
                 .requestMatchers(HttpMethod.GET, "/clientes").permitAll()
+                .requestMatchers(HttpMethod.POST, "/clientes").permitAll()
+                .requestMatchers(HttpMethod.PUT, "/categorias/**").permitAll()
                // .requestMatchers(HttpMethod.GET, "/funcionarios/nome").hasAnyAuthority("ADMIN", "USER")
                 .anyRequest().authenticated()
         )
@@ -79,5 +88,6 @@ public class WebSecurityConfig {
 
         return http.build();
     }
+	
 
 }

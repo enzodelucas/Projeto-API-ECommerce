@@ -2,6 +2,7 @@ package org.serratec.projetoFinal.domain;
 
 import org.serratec.projetoFinal.dto.FuncionarioInserirDTO;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -14,12 +15,16 @@ public class Funcionario extends Usuario{
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
+	@Column(nullable = false, length = 150)
 	private String nome;
 
+	@Column (nullable=false, length = 11)
 	private String telefone;
 	
+	@Column (nullable=false, unique = true, length = 11)
 	private String cpf;
 
+	@Column (nullable = false, length = 50)
 	private String cargo;
 	
 

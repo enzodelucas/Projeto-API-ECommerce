@@ -7,6 +7,7 @@ import org.serratec.projetoFinal.domain.Cliente;
 import org.serratec.projetoFinal.domain.ClienteEndereco;
 import org.serratec.projetoFinal.domain.Endereco;
 import org.serratec.projetoFinal.domain.Pedido;
+import org.serratec.projetoFinal.domain.Usuario;
 
 public class ClienteDTO {
 

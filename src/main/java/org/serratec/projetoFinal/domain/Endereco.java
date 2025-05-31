@@ -20,8 +20,6 @@ public class Endereco {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	@NotBlank(message = "O cep deve ser preenchido.")
-	@Pattern (regexp = "^[0-9]{8}$", message = "O CEP deve conter 8 dígitos numericos.")
 	private String cep;
 	
 	private String bairro;

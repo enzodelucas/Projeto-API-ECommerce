@@ -2,9 +2,12 @@ package org.serratec.projetoFinal.exception;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
@@ -39,12 +42,17 @@ public class ControllerExceptionHandler extends ResponseEntityExceptionHandler {
 return super.handleExceptionInternal(ex, erroResposta, headers, status, request);
 	}
 	
-	@ExceptionHandler({EmailException.class, SenhaException.class, CpfException.class, CategoriaException.class})
-	protected ResponseEntity<Object> handleEmailSenhaCPFCategoriaException(RuntimeException ex){
+	@ExceptionHandler({EmailException.class, SenhaException.class, CpfException.class, CategoriaException.class, UsuarioNaoPermitidoException.class})
+	protected ResponseEntity<Object> handleException(RuntimeException ex){
 		return ResponseEntity.unprocessableEntity().body(ex.getMessage());
 	}
 	
-	
+	@ExceptionHandler(NaoEncontradoException.class)
+	public ResponseEntity<Map<String, String>> naoEncontrado(NaoEncontradoException ex){
+		Map<String, String> erro = new HashMap<>();
+		erro.put("erro", ex.getMessage());
+		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(erro);
+	}
 	
 	}
 	

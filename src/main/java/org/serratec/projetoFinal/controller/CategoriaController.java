@@ -43,9 +43,6 @@ public class CategoriaController {
 	public ResponseEntity<Categoria> atualizarCategoria(@PathVariable Long id,
 			@Valid @RequestBody Categoria categoria) {
 		Categoria categoriaAtt = categoriaService.editar(id, categoria);
-		if (categoriaAtt == null) {
-			return ResponseEntity.notFound().build();
-		}
 		return ResponseEntity.ok(categoriaAtt);
 	}
 

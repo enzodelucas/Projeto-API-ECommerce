@@ -6,7 +6,11 @@ import java.util.Collection;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import jakarta.persistence.Inheritance;
 import jakarta.persistence.InheritanceType;
 
@@ -15,15 +19,17 @@ import jakarta.persistence.InheritanceType;
 public class Usuario implements UserDetails, Serializable {
 
 	private static final long serialVersionUID = 1L;
-
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
+	@Column (nullable=false, unique = true)
 	private String email;
-	
+	@Column (nullable=false, length= 16)
 	private String senha;
 
 	Usuario () {}
 	
 	public Usuario(String email, String senha) {
-		super();
 		this.email = email;
 		this.senha = senha;
 	}
@@ -58,6 +64,15 @@ public class Usuario implements UserDetails, Serializable {
 	public String getUsername() {
 		return email;
 	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+	
 	
 	
 }

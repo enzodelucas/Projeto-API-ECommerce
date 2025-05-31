@@ -3,33 +3,32 @@ package org.serratec.projetoFinal.domain;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.hibernate.validator.constraints.br.CPF;
 import org.serratec.projetoFinal.dto.ClienteInserirDTO;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Pattern;
-import jakarta.validation.constraints.Size;
 
 @Entity
 public class Cliente extends Usuario{
-
+	/*
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+	private Long id;*/
 
+	@Column(nullable = false, length = 150)
 	private String nome;
 
+	@Column (nullable=false, length = 11)
 	private String telefone;
 
+	@Column (nullable=false, unique = true, length = 14)
 	private String cpf;
 
 	//private String senha;
@@ -40,7 +39,7 @@ public class Cliente extends Usuario{
 
 	@OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL) //teste
 	private List<ClienteEndereco> enderecos = new ArrayList<>();
-	
+
 	public Cliente () {}
 
 	public Cliente (ClienteInserirDTO clienteIns) {
@@ -50,13 +49,13 @@ public class Cliente extends Usuario{
 		this.telefone = clienteIns.getTelefone();
 	}
 
-	public Long getId() {
+	/*public Long getId() {
 		return id;
 	}
 
 	public void setId(Long id) {
 		this.id = id;
-	}
+	}*/
 
 	public String getNome() {
 		return nome;
@@ -73,7 +72,7 @@ public class Cliente extends Usuario{
 	public void setTelefone(String telefone) {
 		this.telefone = telefone;
 	}
-	
+
 	public String getCpf() {
 		return cpf;
 	}
@@ -100,10 +99,10 @@ public class Cliente extends Usuario{
 
 	@Override
 	public String toString() {
-        return "mudar depois";
-    }
-	
-	
+		return "mudar depois";
+	}
+
+
 
 
 

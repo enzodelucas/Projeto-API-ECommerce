@@ -2,18 +2,20 @@ package org.serratec.projetoFinal.service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 import org.serratec.projetoFinal.config.MailConfig;
-import org.serratec.projetoFinal.config.MailConfig;
 import org.serratec.projetoFinal.domain.Cliente;
+import org.serratec.projetoFinal.domain.ClienteEndereco;
+import org.serratec.projetoFinal.domain.Endereco;
 import org.serratec.projetoFinal.dto.ClienteDTO;
 import org.serratec.projetoFinal.dto.ClienteInserirDTO;
+import org.serratec.projetoFinal.dto.EnderecoClienteDTO;
+import org.serratec.projetoFinal.dto.EnderecoInserirDTO;
 import org.serratec.projetoFinal.exception.CpfException;
 import org.serratec.projetoFinal.exception.EmailException;
 import org.serratec.projetoFinal.exception.SenhaException;
+import org.serratec.projetoFinal.repository.ClienteEnderecoRepository;
 import org.serratec.projetoFinal.repository.ClienteRepository;
-import org.serratec.projetoFinal.repository.EnderecoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,10 +27,17 @@ public class ClienteService {
 	private ClienteRepository clienteRepository;
 
 	@Autowired
-	private EnderecoRepository enderecoRepository;
+	private EnderecoService enderecoService;
+	
+	@Autowired
+	private ClienteEnderecoRepository clienteEnderecoRepository;
    
 	@Autowired
 	private MailConfig mailConfig;
+	
+	@Autowired
+	private AutenticacaoService autenticacaoService;
+
 	
     
 	public ClienteDTO inserir(ClienteInserirDTO clienteIns) 
@@ -66,7 +75,7 @@ public class ClienteService {
 	}
 	
 	//teste, favor corrigir depois
-	public ClienteDTO listarId(Long id) {
+	/*public ClienteDTO listarId(Long id) {
 		 Optional<Cliente> nome = clienteRepository.findById(id);
 		 if(nome.isPresent()) {
 			 Cliente cliente = nome.get();
@@ -74,6 +83,34 @@ public class ClienteService {
 			 return clienteDTO;
 		 }
 		 return null;
+	}*/
+	
+	public ClienteDTO buscarDados() { // por autenticação
+		 Cliente cliente= autenticacaoService.clienteAutenticacao();
+		 ClienteDTO clienteDTO = new ClienteDTO(cliente);
+		 return clienteDTO;
 	}
+	
+	public void deletar() { // por autenticação
+		Cliente cliente = autenticacaoService.clienteAutenticacao();
+		clienteRepository.delete(cliente);
+	}
+	
+	public EnderecoClienteDTO inserirEndereco (EnderecoInserirDTO enderecoIns) { // por autenticação
+		Cliente cliente = autenticacaoService.clienteAutenticacao();
+		Endereco endereco = enderecoService.buscarInserir(enderecoIns.getCep());
+		
+		ClienteEndereco clienteE = new ClienteEndereco(cliente, endereco);
+		
+		clienteEnderecoRepository.save(clienteE);
+		
+		cliente.getEnderecos().add(clienteE);
+		
+		EnderecoClienteDTO enderecoC = new EnderecoClienteDTO (clienteE);
+		return enderecoC;
+		
+	}
+	
+	
 
 }

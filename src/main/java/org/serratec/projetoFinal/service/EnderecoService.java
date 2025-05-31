@@ -15,7 +15,7 @@ public class EnderecoService {
 	@Autowired
 	EnderecoRepository enderecoRepository;
 
-	public EnderecoDTO buscarInserir(String cep) {
+	public EnderecoDTO buscarInserirDTO(String cep) {
 		Optional<Endereco> enderecoOpt = enderecoRepository.findByCep(cep);
 		if (enderecoOpt.isPresent()) {
 			EnderecoDTO enderecoDTO = new EnderecoDTO(enderecoOpt.get());
@@ -28,7 +28,7 @@ public class EnderecoService {
 				Endereco enderecoViaCep = enderecoViaCepOpt.get();
 				String cepSemTraco = enderecoViaCep.getCep().replaceAll("-", "");
 				enderecoViaCep.setCep(cepSemTraco);
-				return inserir(enderecoViaCep);
+				return inserirDTO(enderecoViaCep);
 			} else {
 				return null;
 			}
@@ -36,16 +36,17 @@ public class EnderecoService {
 		
 	}
 	
-	public EnderecoDTO inserir(Endereco endereco) {
+	public EnderecoDTO inserirDTO(Endereco endereco) {
 		endereco = enderecoRepository.save(endereco);
 		EnderecoDTO enderecoDto = new EnderecoDTO(endereco);
 		return enderecoDto;
 	}
 	
-	public Endereco buscarInserirTeste(String cep) {
+	
+	
+	public Endereco buscarInserir(String cep) {
 		Optional<Endereco> enderecoOpt = enderecoRepository.findByCep(cep);
 		if (enderecoOpt.isPresent()) {
-			//Endereco enderecoDTO = new Endereco(enderecoOpt.get());
 			return enderecoOpt.get();
 		} else {
 			RestTemplate restTemplate = new RestTemplate();
@@ -66,7 +67,6 @@ public class EnderecoService {
 	
 	public Endereco inserirTeste(Endereco endereco) {
 		endereco = enderecoRepository.save(endereco);
-		//Endereco endereco = new EnderecoDTO(endereco);
 		return endereco;
 	}
 	
