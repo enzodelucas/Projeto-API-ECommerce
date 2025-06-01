@@ -4,19 +4,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.serratec.projetoFinal.dto.ClienteInserirDTO;
+import org.springframework.security.core.GrantedAuthority;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 
 @Entity
-public class Cliente extends Usuario{
+public class Cliente extends Usuario implements GrantedAuthority {
 	/*
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -100,6 +98,11 @@ public class Cliente extends Usuario{
 	@Override
 	public String toString() {
 		return "mudar depois";
+	}
+
+	@Override
+	public String getAuthority() {
+		return "cliente";
 	}
 
 

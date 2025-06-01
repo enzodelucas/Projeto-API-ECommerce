@@ -19,4 +19,13 @@ public class MailConfig {
 		message.setText("Dados: \n" + texto + "\n\nE-COMMERCE GRUPO 03.");
 		javaMailSender.send(message);
 	}
+	
+	public void sendEmailAtt(String para, String assunto, String texto) {
+        SimpleMailMessage message = new SimpleMailMessage();
+        message.setFrom("lojagrupo03@gmail.com");
+        message.setTo(para);
+        message.setSubject(assunto);
+        message.setText("Atualização de cadastro concluída com sucesso! \n Novos dados: \n" + texto + "\n\nE-COMMERCE GRUPO 03.");
+        javaMailSender.send(message);
+    }
 }

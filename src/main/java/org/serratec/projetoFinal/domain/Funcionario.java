@@ -1,6 +1,7 @@
 package org.serratec.projetoFinal.domain;
 
 import org.serratec.projetoFinal.dto.FuncionarioInserirDTO;
+import org.springframework.security.core.GrantedAuthority;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -9,7 +10,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
 @Entity
-public class Funcionario extends Usuario{
+public class Funcionario extends Usuario implements GrantedAuthority {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,6 +28,7 @@ public class Funcionario extends Usuario{
 	@Column (nullable = false, length = 50)
 	private String cargo;
 	
+	public Funcionario() {}
 
 	public Funcionario(FuncionarioInserirDTO funcionarioIns) {
 		super(funcionarioIns.getEmail(), funcionarioIns.getSenha());
@@ -75,6 +77,11 @@ public class Funcionario extends Usuario{
 
 	public void setCargo(String cargo) {
 		this.cargo = cargo;
+	}
+
+	@Override
+	public String getAuthority() {
+		return "funcionario";
 	}
 	
 	

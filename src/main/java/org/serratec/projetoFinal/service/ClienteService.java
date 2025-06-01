@@ -2,6 +2,7 @@ package org.serratec.projetoFinal.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.serratec.projetoFinal.config.MailConfig;
 import org.serratec.projetoFinal.domain.Cliente;
@@ -17,6 +18,7 @@ import org.serratec.projetoFinal.exception.SenhaException;
 import org.serratec.projetoFinal.repository.ClienteEnderecoRepository;
 import org.serratec.projetoFinal.repository.ClienteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -37,6 +39,9 @@ public class ClienteService {
 	
 	@Autowired
 	private AutenticacaoService autenticacaoService;
+	
+	@Autowired
+	BCryptPasswordEncoder encoder;
 
 	
     
@@ -53,6 +58,8 @@ public class ClienteService {
 		}
 
 		Cliente cliente = new Cliente(clienteIns);
+		
+		cliente.setSenha(encoder.encode(clienteIns.getSenha())); //teste
 		
 		cliente = clienteRepository.save(cliente);
 		
@@ -111,6 +118,20 @@ public class ClienteService {
 		
 	}
 	
+	public ClienteDTO atualizarPorId(Long id, ClienteInserirDTO clienteIns) {
+        Optional<Cliente> clienteOpt = clienteRepository.findById(id);
+        if(clienteOpt.isPresent()) {
+            Cliente cliente = clienteOpt.get();
+            cliente.setNome(clienteIns.getNome());
+            cliente.setTelefone(clienteIns.getTelefone());
+            cliente.setSenha(clienteIns.getSenha());
+            cliente = clienteRepository.save(cliente);
+            ClienteDTO clienteDTO = new ClienteDTO(cliente);
+            mailConfig.sendEmailAtt(cliente.getEmail(), "Atualização de cadastro do cliente", cliente.toString());
+            return clienteDTO;
+        }
+        return null;
+   }
 	
 
 }

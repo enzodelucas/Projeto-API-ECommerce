@@ -2,6 +2,7 @@ package org.serratec.projetoFinal.domain;
 
 import java.io.Serializable;
 import java.util.Collection;
+import java.util.List;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -24,7 +25,7 @@ public class Usuario implements UserDetails, Serializable {
 	private Long id;
 	@Column (nullable=false, unique = true)
 	private String email;
-	@Column (nullable=false, length= 16)
+	@Column (nullable=false)
 	private String senha;
 
 	Usuario () {}
@@ -52,7 +53,10 @@ public class Usuario implements UserDetails, Serializable {
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
-		return null;
+		return List.of(
+		        new Cliente(),
+		        new Funcionario()
+		    );
 	}
 
 	@Override

@@ -28,7 +28,7 @@ public class ClienteInserirDTO {
 	private String cpf;
 
 	@NotBlank(message = "A senha não pode ser vazia.")
-	@Size(min = 8, max = 16, message = "A senha deve ter no mínimo {min} caracteres e no máximo {max} caracteres.")
+	@Size(min = 8, message = "A senha deve ter no mínimo {min} caracteres")
 	private String senha;
 
 	private String confirmaSenha;

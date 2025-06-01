@@ -66,6 +66,8 @@ public class WebSecurityConfig {
                 .requestMatchers(HttpMethod.GET, "/clientes").permitAll()
                 .requestMatchers(HttpMethod.POST, "/clientes").permitAll()
                 .requestMatchers(HttpMethod.PUT, "/categorias/**").permitAll()
+                .requestMatchers(HttpMethod.PUT, "/clientes/inserirEndereco/me").hasAnyAuthority("cliente")
+                
                // .requestMatchers(HttpMethod.GET, "/funcionarios/nome").hasAnyAuthority("ADMIN", "USER")
                 .anyRequest().authenticated()
         )
