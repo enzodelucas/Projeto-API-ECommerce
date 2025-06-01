@@ -59,7 +59,7 @@ public class ClienteService {
 
 		Cliente cliente = new Cliente(clienteIns);
 		
-		cliente.setSenha(encoder.encode(clienteIns.getSenha())); //teste
+		cliente.setSenha(encoder.encode(clienteIns.getSenha()));
 		
 		cliente = clienteRepository.save(cliente);
 		

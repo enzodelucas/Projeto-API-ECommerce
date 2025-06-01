@@ -53,12 +53,12 @@ public class ClienteController {
 		return ResponseEntity.ok(clienteService.listar());
 	}
 	
-	@GetMapping("/verMeusDados/me") //testar depois
+	@GetMapping("/verMeusDados/me") //deu certo
 	public ResponseEntity<ClienteDTO> verMeusDados() {
 		return ResponseEntity.ok(clienteService.buscarDados());
 	}
 	
-	@DeleteMapping("/deletarConta/me") //testar depois
+	@DeleteMapping("/deletarConta/me") //deu certo
 	public ResponseEntity<Void> deletarConta() {
 		clienteService.deletar();
 		return ResponseEntity.noContent().build();
@@ -71,7 +71,7 @@ public class ClienteController {
 		URI uri = ServletUriComponentsBuilder
 				.fromCurrentRequest()
 				.path("{id}")
-				.buildAndExpand(endereco.getId()) //teste
+				.buildAndExpand(endereco.getEnderecoDTO().getCep()) //teste
 				.toUri();
 		
 		

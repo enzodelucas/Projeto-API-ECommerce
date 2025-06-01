@@ -32,7 +32,7 @@ public class Funcionario extends Usuario {
 
 	public Funcionario(FuncionarioInserirDTO funcionarioIns) {
 		super(funcionarioIns.getEmail(), funcionarioIns.getSenha());
-		super.setTipo("FUNCIONARIO");
+		super.setTipo("ROLE_FUNCIONARIO");
 		this.nome = funcionarioIns.getNome();
 		this.telefone = funcionarioIns.getTelefone();
 		this.cpf = funcionarioIns.getCpf();

@@ -38,7 +38,7 @@ public class Cliente extends Usuario {
 
 	public Cliente (ClienteInserirDTO clienteIns) {
 		super(clienteIns.getEmail(), clienteIns.getSenha());
-		super.setTipo("CLIENTE");
+		super.setTipo("ROLE_CLIENTE");
 		this.nome = clienteIns.getNome();
 		this.cpf = clienteIns.getCpf();
 		this.telefone = clienteIns.getTelefone();
