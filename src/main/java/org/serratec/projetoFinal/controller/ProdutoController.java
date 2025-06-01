@@ -3,6 +3,7 @@ package org.serratec.projetoFinal.controller;
 import java.net.URI;
 import java.util.List;
 
+import org.serratec.projetoFinal.domain.Categoria;
 import org.serratec.projetoFinal.domain.Produto;
 import org.serratec.projetoFinal.dto.ProdutoDTO;
 import org.serratec.projetoFinal.dto.ProdutoInserirDTO;
@@ -10,7 +11,9 @@ import org.serratec.projetoFinal.service.ProdutoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -36,5 +39,13 @@ public class ProdutoController {
 	@GetMapping
 	public ResponseEntity<List<ProdutoDTO>> listar() {
 		return ResponseEntity.ok(produtoService.listarTodos());
+	}
+	
+	@PutMapping("/{id}")
+	public ResponseEntity<ProdutoDTO> atualizarProduto(@PathVariable Long id,
+			@Valid @RequestBody ProdutoInserirDTO produtoIns) {
+		
+		ProdutoDTO produtoAtt = produtoService.editar(id, produtoIns);
+		return ResponseEntity.ok(produtoAtt);
 	}
 }

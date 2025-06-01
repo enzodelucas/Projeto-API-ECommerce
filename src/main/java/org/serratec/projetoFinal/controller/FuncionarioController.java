@@ -9,7 +9,9 @@ import org.serratec.projetoFinal.dto.FuncionarioInserirDTO;
 import org.serratec.projetoFinal.service.FuncionarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -36,5 +38,11 @@ public class FuncionarioController {
 	@GetMapping("/listarFuncionarios")
 	public ResponseEntity<List<FuncionarioDTO>> listarFuncionarios() {
 		return ResponseEntity.ok(funcionarioService.listar());
+	}
+	
+	@DeleteMapping("/deletarFuncinario/{id}") //deu certo
+	public ResponseEntity<Void> deletarfuncioanrio(@PathVariable Long id) {
+		funcionarioService.deletar(id);
+		return ResponseEntity.noContent().build();
 	}
 }

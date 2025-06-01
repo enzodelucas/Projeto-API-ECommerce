@@ -74,6 +74,7 @@ public class WebSecurityConfig {
                 .requestMatchers(HttpMethod.POST, "/produtos/inserirProdutos").hasRole("FUNCIONARIO")
                 .requestMatchers(HttpMethod.POST, "/funcionarios/inserirFuncionario").hasRole("FUNCIONARIO")
                 .requestMatchers(HttpMethod.POST, "/categorias/inserirCategoria").hasRole("FUNCIONARIO")
+                .requestMatchers(HttpMethod.DELETE, "/funcionarios/deletarFuncinario/{id}").hasRole("FUNCIONARIO")
                 
                 //mudar permissôes depois
                 

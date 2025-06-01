@@ -2,6 +2,7 @@ package org.serratec.projetoFinal.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.serratec.projetoFinal.config.MailConfig;
 import org.serratec.projetoFinal.domain.Cliente;
@@ -65,5 +66,12 @@ public class FuncionarioService {
 			funcionarioDTO.add(new FuncionarioDTO(funcionario));
 		}
 		return funcionarioDTO;
+	}
+	
+	public void deletar(Long id) { 
+		Optional<Funcionario> funcionario = funcionarioRepository.findById(id);
+		if(funcionario.isPresent()) {
+		funcionarioRepository.deleteById(id);
+		}
 	}
 }
