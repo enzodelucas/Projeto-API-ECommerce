@@ -65,10 +65,12 @@ public class WebSecurityConfig {
             authorize
                 .requestMatchers(HttpMethod.GET, "/clientes").permitAll()
                 .requestMatchers(HttpMethod.POST, "/clientes").permitAll()
-                .requestMatchers(HttpMethod.PUT, "/categorias/**").permitAll()
-                .requestMatchers(HttpMethod.PUT, "/clientes/inserirEndereco/me").hasAnyAuthority("cliente")
+                .requestMatchers(HttpMethod.GET, "/categorias").hasRole("FUNCIONARIO")
+                .requestMatchers(HttpMethod.GET, "/clientes/verMeusDados/me").permitAll()
+                .requestMatchers(HttpMethod.POST, "/funcionarios").permitAll()
                 
-               // .requestMatchers(HttpMethod.GET, "/funcionarios/nome").hasAnyAuthority("ADMIN", "USER")
+                
+               //.requestMatchers(HttpMethod.GET, "/funcionarios/nome").hasAnyAuthority("ADMIN", "USER")
                 .anyRequest().authenticated()
         )
         .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));

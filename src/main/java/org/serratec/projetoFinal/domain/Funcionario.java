@@ -10,7 +10,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
 @Entity
-public class Funcionario extends Usuario implements GrantedAuthority {
+public class Funcionario extends Usuario {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,7 +22,7 @@ public class Funcionario extends Usuario implements GrantedAuthority {
 	@Column (nullable=false, length = 11)
 	private String telefone;
 	
-	@Column (nullable=false, unique = true, length = 11)
+	@Column (nullable=false, unique = true, length = 14)
 	private String cpf;
 
 	@Column (nullable = false, length = 50)
@@ -32,6 +32,7 @@ public class Funcionario extends Usuario implements GrantedAuthority {
 
 	public Funcionario(FuncionarioInserirDTO funcionarioIns) {
 		super(funcionarioIns.getEmail(), funcionarioIns.getSenha());
+		super.setTipo("FUNCIONARIO");
 		this.nome = funcionarioIns.getNome();
 		this.telefone = funcionarioIns.getTelefone();
 		this.cpf = funcionarioIns.getCpf();
@@ -79,9 +80,11 @@ public class Funcionario extends Usuario implements GrantedAuthority {
 		this.cargo = cargo;
 	}
 
-	@Override
-	public String getAuthority() {
-		return "funcionario";
+
+	@Override //mudar depois
+	public String toString() {
+		return "Funcionario [id=" + id + ", nome=" + nome + ", telefone=" + telefone + ", cpf=" + cpf + ", cargo="
+				+ cargo + "]";
 	}
 	
 	

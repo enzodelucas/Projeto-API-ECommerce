@@ -31,10 +31,13 @@ public class FuncionarioInserirDTO {
 	private String email;
 	
 	@NotBlank(message = "A senha não pode ser vazia.")
-	@Size(min = 8, max = 16, message = "A senha deve ter no mínimo {min} caracteres e no máximo {max} caracteres.")
+	@Size(min = 8, message = "A senha deve ter no mínimo {min} caracteres.")
 	private String senha;
 	
 	private String confirmaSenha;
+	
+	
+	
 
 	public String getNome() {
 		return nome;
@@ -91,6 +94,8 @@ public class FuncionarioInserirDTO {
 	public void setConfirmaSenha(String confirmaSenha) {
 		this.confirmaSenha = confirmaSenha;
 	}
+	
+	
 	
 	
 	

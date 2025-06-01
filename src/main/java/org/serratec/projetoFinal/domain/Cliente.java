@@ -14,11 +14,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.OneToMany;
 
 @Entity
-public class Cliente extends Usuario implements GrantedAuthority {
-	/*
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;*/
+public class Cliente extends Usuario {
+	
 
 	@Column(nullable = false, length = 150)
 	private String nome;
@@ -29,7 +26,6 @@ public class Cliente extends Usuario implements GrantedAuthority {
 	@Column (nullable=false, unique = true, length = 14)
 	private String cpf;
 
-	//private String senha;
 
 	@JsonManagedReference
 	@OneToMany(mappedBy = "cliente")
@@ -42,18 +38,11 @@ public class Cliente extends Usuario implements GrantedAuthority {
 
 	public Cliente (ClienteInserirDTO clienteIns) {
 		super(clienteIns.getEmail(), clienteIns.getSenha());
+		super.setTipo("CLIENTE");
 		this.nome = clienteIns.getNome();
 		this.cpf = clienteIns.getCpf();
 		this.telefone = clienteIns.getTelefone();
 	}
-
-	/*public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}*/
 
 	public String getNome() {
 		return nome;
@@ -100,11 +89,7 @@ public class Cliente extends Usuario implements GrantedAuthority {
 		return "mudar depois";
 	}
 
-	@Override
-	public String getAuthority() {
-		return "cliente";
-	}
-
+	
 
 
 
