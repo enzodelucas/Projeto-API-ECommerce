@@ -1,5 +1,8 @@
 package org.serratec.projetoFinal.service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.serratec.projetoFinal.config.MailConfig;
 import org.serratec.projetoFinal.domain.Cliente;
 import org.serratec.projetoFinal.domain.Funcionario;
@@ -28,9 +31,7 @@ public class FuncionarioService {
 	
 	@Autowired
 	BCryptPasswordEncoder encoder;
-	
-	
-	
+
 	public FuncionarioDTO inserir(FuncionarioInserirDTO funcionarioIns) 
 			throws EmailException, SenhaException, CpfException {
 		if (funcionarioRepository.findByEmail(funcionarioIns.getEmail()) != null) {
@@ -55,6 +56,14 @@ public class FuncionarioService {
 		
 
 		return funcionarioDTO;
-
+	}
+	
+	public List<FuncionarioDTO> listar() {
+		List<Funcionario> funcionarios = funcionarioRepository.findAll();
+		List<FuncionarioDTO> funcionarioDTO = new ArrayList<>();
+		for (Funcionario funcionario : funcionarios) {
+			funcionarioDTO.add(new FuncionarioDTO(funcionario));
+		}
+		return funcionarioDTO;
 	}
 }

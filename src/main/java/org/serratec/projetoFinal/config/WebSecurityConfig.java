@@ -68,9 +68,13 @@ public class WebSecurityConfig {
                 .requestMatchers(HttpMethod.GET, "/categorias").hasRole("FUNCIONARIO")
                 .requestMatchers(HttpMethod.GET, "/clientes/verMeusDados/me").permitAll()
                 .requestMatchers(HttpMethod.POST, "/funcionarios").permitAll()
+                .requestMatchers(HttpMethod.GET, "/funcionarios").permitAll()
                 .requestMatchers(HttpMethod.DELETE, "/clientes/deletarConta/me").hasRole("CLIENTE")
                 .requestMatchers(HttpMethod.POST, "/clientes/inserirEndereco/me").hasRole("CLIENTE")
-               
+                .requestMatchers(HttpMethod.POST, "/produtos/inserirProdutos").hasRole("FUNCIONARIO")
+                .requestMatchers(HttpMethod.POST, "/funcionarios/inserirFuncionario").hasRole("FUNCIONARIO")
+                .requestMatchers(HttpMethod.POST, "/categorias/inserirCategoria").hasRole("FUNCIONARIO")
+                
                 //mudar permissôes depois
                 
                //.requestMatchers(HttpMethod.GET, "/funcionarios/nome").hasAnyAuthority("ADMIN", "USER")

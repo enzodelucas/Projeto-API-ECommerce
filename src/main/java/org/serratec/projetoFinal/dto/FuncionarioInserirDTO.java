@@ -37,7 +37,21 @@ public class FuncionarioInserirDTO {
 	private String confirmaSenha;
 	
 	
-	
+
+	public FuncionarioInserirDTO() {
+		super();
+	}
+
+	public FuncionarioInserirDTO(String nome,String telefone,String cpf,String cargo,String email,String senha,String confirmaSenha) {
+		super();
+		this.nome = nome;
+		this.telefone = telefone;
+		this.cpf = cpf;
+		this.cargo = cargo;
+		this.email = email;
+		this.senha = senha;
+		this.confirmaSenha = confirmaSenha;
+	}
 
 	public String getNome() {
 		return nome;

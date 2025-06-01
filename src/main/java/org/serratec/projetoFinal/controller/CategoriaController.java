@@ -26,7 +26,7 @@ public class CategoriaController {
 	@Autowired
 	CategoriaService categoriaService;
 
-	@PostMapping
+	@PostMapping("/inserirCategoria")
 	public ResponseEntity<Categoria> inserirCategoria(@Valid @RequestBody Categoria categoria) {
 		categoriaService.inserir(categoria);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(categoria.getId())

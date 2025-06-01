@@ -25,7 +25,7 @@ public class ProdutoController {
 	@Autowired
 	ProdutoService produtoService;
 
-	@PostMapping
+	@PostMapping("/inserirProdutos")
 	public ResponseEntity<ProdutoDTO> inserirProdutos(@Valid @RequestBody ProdutoInserirDTO produtoIns) {
 		ProdutoDTO produtoDTO = produtoService.inserir(produtoIns);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(produtoDTO.getId())
