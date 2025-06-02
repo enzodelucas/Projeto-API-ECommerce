@@ -16,6 +16,7 @@ import org.serratec.projetoFinal.dto.EnderecoDTO;
 import org.serratec.projetoFinal.dto.EnderecoInserirDTO;
 import org.serratec.projetoFinal.exception.CpfException;
 import org.serratec.projetoFinal.exception.EmailException;
+import org.serratec.projetoFinal.exception.NaoEncontradoException;
 import org.serratec.projetoFinal.exception.SenhaException;
 import org.serratec.projetoFinal.repository.ClienteEnderecoRepository;
 import org.serratec.projetoFinal.repository.ClienteRepository;
@@ -166,5 +167,18 @@ public class ClienteService {
 		ClienteDTO clienteDTO = new ClienteDTO(cliente);
 		mailConfig.sendEmailAtt(cliente.getEmail(), "Atualização de cadastro do cliente", cliente.toString());
 		return clienteDTO;
+	}
+	
+	public void deletarEndereço(Long Id) {
+		Cliente cliente = autenticacaoService.clienteAutenticacao();
+		List<ClienteEndereco> enderecos = cliente.getEnderecos();
+		Optional<ClienteEndereco> enderecoOpt = clienteEnderecoRepository.findById(Id);
+		if(enderecoOpt.isPresent()){
+			ClienteEndereco clienteEndereco = enderecoOpt.get();
+			enderecos.remove(clienteEndereco);
+		}
+		
+		throw new NaoEncontradoException("Endereço não encontrado");
+		
 	}
 }

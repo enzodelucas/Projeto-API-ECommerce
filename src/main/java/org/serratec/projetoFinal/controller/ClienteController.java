@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -86,4 +87,9 @@ public class ClienteController {
 		return ResponseEntity.ok(cliente);
 	}
 	
+	@DeleteMapping("/deletarEndereco/{id}")
+	public ResponseEntity<Void> deletarEndereco(@PathVariable Long id) {
+		clienteService.deletarEndereço(id);
+		return ResponseEntity.noContent().build();
+	}
 }
