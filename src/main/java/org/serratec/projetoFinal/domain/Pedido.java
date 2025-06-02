@@ -2,7 +2,6 @@ package org.serratec.projetoFinal.domain;
 
 
 
-import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -32,12 +31,12 @@ public class Pedido {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	@JsonBackReference
+	@JsonBackReference("cliente-pedido")
 	@ManyToOne
 	@JoinColumn(name = "id_cliente")
 	private Cliente cliente;
 	
-	@JsonBackReference
+	
 	@ManyToOne
 	@JoinColumn(name = "id_enderecoEntrega")
 	private ClienteEndereco enderecoEntrega;

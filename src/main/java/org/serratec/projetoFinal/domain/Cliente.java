@@ -27,10 +27,11 @@ public class Cliente extends Usuario {
 	private String cpf;
 
 
-	@JsonManagedReference
+	@JsonManagedReference("cliente-pedido")
 	@OneToMany(mappedBy = "cliente")
 	private List<Pedido> pedidos;
 
+	@JsonManagedReference("cliente-endereco")
 	@OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL) //teste
 	private List<ClienteEndereco> enderecos = new ArrayList<>();
 

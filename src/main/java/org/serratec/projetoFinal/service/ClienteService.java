@@ -8,9 +8,11 @@ import org.serratec.projetoFinal.config.MailConfig;
 import org.serratec.projetoFinal.domain.Cliente;
 import org.serratec.projetoFinal.domain.ClienteEndereco;
 import org.serratec.projetoFinal.domain.Endereco;
+import org.serratec.projetoFinal.dto.ClienteAtualizarDTO;
 import org.serratec.projetoFinal.dto.ClienteDTO;
 import org.serratec.projetoFinal.dto.ClienteInserirDTO;
 import org.serratec.projetoFinal.dto.EnderecoClienteDTO;
+import org.serratec.projetoFinal.dto.EnderecoDTO;
 import org.serratec.projetoFinal.dto.EnderecoInserirDTO;
 import org.serratec.projetoFinal.exception.CpfException;
 import org.serratec.projetoFinal.exception.EmailException;
@@ -30,21 +32,21 @@ public class ClienteService {
 
 	@Autowired
 	private EnderecoService enderecoService;
-	
+
 	@Autowired
 	private ClienteEnderecoRepository clienteEnderecoRepository;
-   
+
 	@Autowired
 	private MailConfig mailConfig;
-	
+
 	@Autowired
 	private AutenticacaoService autenticacaoService;
-	
+
 	@Autowired
 	BCryptPasswordEncoder encoder;
 
-	
-    
+
+
 	public ClienteDTO inserir(ClienteInserirDTO clienteIns) 
 			throws EmailException, SenhaException, CpfException {
 		if (clienteRepository.findByEmail(clienteIns.getEmail()) != null) {
@@ -58,20 +60,20 @@ public class ClienteService {
 		}
 
 		Cliente cliente = new Cliente(clienteIns);
-		
+
 		cliente.setSenha(encoder.encode(clienteIns.getSenha()));
-		
+
 		cliente = clienteRepository.save(cliente);
-		
+
 		mailConfig.sendEmail(cliente.getEmail(), "Cadastro de Cliente", cliente.toString());
-		
+
 		ClienteDTO clienteDTO = new ClienteDTO(cliente);
-		
+
 
 		return clienteDTO;
 
 	}
-	
+
 	public List<ClienteDTO> listar() {
 		List<Cliente> clientes = clienteRepository.findAll();
 		List<ClienteDTO> clienteDTO = new ArrayList<>();
@@ -80,7 +82,7 @@ public class ClienteService {
 		}
 		return clienteDTO;
 	}
-	
+
 	//teste, favor corrigir depois
 	/*public ClienteDTO listarId(Long id) {
 		 Optional<Cliente> nome = clienteRepository.findById(id);
@@ -91,47 +93,76 @@ public class ClienteService {
 		 }
 		 return null;
 	}*/
-	
+
 	public ClienteDTO buscarDados() { // por autenticação
-		 Cliente cliente= autenticacaoService.clienteAutenticacao();
-		 ClienteDTO clienteDTO = new ClienteDTO(cliente);
-		 return clienteDTO;
+		Cliente cliente= autenticacaoService.clienteAutenticacao();
+		ClienteDTO clienteDTO = new ClienteDTO(cliente);
+		return clienteDTO;
 	}
-	
+
 	public void deletar() { // por autenticação
 		Cliente cliente = autenticacaoService.clienteAutenticacao();
 		clienteRepository.delete(cliente);
 	}
-	
+
 	public EnderecoClienteDTO inserirEndereco (EnderecoInserirDTO enderecoIns) { // por autenticação
 		Cliente cliente = autenticacaoService.clienteAutenticacao();
 		Endereco endereco = enderecoService.buscarInserir(enderecoIns.getCep());
-		
+
 		ClienteEndereco clienteE = new ClienteEndereco(cliente, endereco);
-		
+
 		clienteEnderecoRepository.save(clienteE);
-		
+
 		cliente.getEnderecos().add(clienteE);
-		
+		endereco.getClientes().add(clienteE); // trocar depois talvez
+
 		EnderecoClienteDTO enderecoC = new EnderecoClienteDTO (clienteE);
 		return enderecoC;
-		
-	}
-	
-	public ClienteDTO atualizarPorId(Long id, ClienteInserirDTO clienteIns) {
-        Optional<Cliente> clienteOpt = clienteRepository.findById(id);
-        if(clienteOpt.isPresent()) {
-            Cliente cliente = clienteOpt.get();
-            cliente.setNome(clienteIns.getNome());
-            cliente.setTelefone(clienteIns.getTelefone());
-            cliente.setSenha(clienteIns.getSenha());
-            cliente = clienteRepository.save(cliente);
-            ClienteDTO clienteDTO = new ClienteDTO(cliente);
-            mailConfig.sendEmailAtt(cliente.getEmail(), "Atualização de cadastro do cliente", cliente.toString());
-            return clienteDTO;
-        }
-        return null;
-   }
-	
 
+	}
+
+	/*	public ClienteDTO atualizarPorId(Long id, ClienteInserirDTO clienteIns) {
+		Optional<Cliente> clienteOpt = clienteRepository.findById(id);
+		if(clienteOpt.isPresent()) {
+			Cliente cliente = clienteOpt.get();
+			cliente.setNome(clienteIns.getNome());
+			cliente.setTelefone(clienteIns.getTelefone());
+			cliente.setSenha(clienteIns.getSenha());
+			cliente = clienteRepository.save(cliente);
+			ClienteDTO clienteDTO = new ClienteDTO(cliente);
+			mailConfig.sendEmailAtt(cliente.getEmail(), "Atualização de cadastro do cliente", cliente.toString());
+			return clienteDTO;
+		}
+		return null;
+	}*/
+
+	public ClienteDTO atualizar(ClienteAtualizarDTO clienteAt) {
+		Cliente cliente = autenticacaoService.clienteAutenticacao();
+
+		if (clienteAt.getNome() != null) {
+			if (clienteAt.getNome().length() < 3 || clienteAt.getNome().length() > 150) {
+				throw new IllegalArgumentException("Nome deve ter entre 3 e 150 caracteres.");
+			}
+			cliente.setNome(clienteAt.getNome());
+		}
+		if (clienteAt.getSenha() != null) {
+			if (clienteAt.getSenha().length() < 8 ) {
+				throw new IllegalArgumentException("Senha deve ter no mínimo 8 caracteres.");
+			}
+			String senhaCriptografada = encoder.encode(clienteAt.getSenha());
+			cliente.setSenha(senhaCriptografada);
+		}
+		if (clienteAt.getTelefone() != null) {
+			if (!clienteAt.getTelefone().matches("\\d{11}")) {
+				throw new IllegalArgumentException("Telefone deve ter 11 dígitos.");
+			}
+			cliente.setTelefone(clienteAt.getTelefone());
+		}
+
+		cliente = clienteRepository.save(cliente);
+
+		ClienteDTO clienteDTO = new ClienteDTO(cliente);
+		mailConfig.sendEmailAtt(cliente.getEmail(), "Atualização de cadastro do cliente", cliente.toString());
+		return clienteDTO;
+	}
 }

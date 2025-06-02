@@ -70,11 +70,13 @@ public class WebSecurityConfig {
                 .requestMatchers(HttpMethod.POST, "/funcionarios").permitAll()
                 .requestMatchers(HttpMethod.GET, "/funcionarios").permitAll()
                 .requestMatchers(HttpMethod.DELETE, "/clientes/deletarConta/me").hasRole("CLIENTE")
+                .requestMatchers(HttpMethod.PUT, "/clientes/atualizarDados/me").hasRole("CLIENTE")
                 .requestMatchers(HttpMethod.POST, "/clientes/inserirEndereco/me").hasRole("CLIENTE")
                 .requestMatchers(HttpMethod.POST, "/produtos/inserirProdutos").hasRole("FUNCIONARIO")
                 .requestMatchers(HttpMethod.POST, "/funcionarios/inserirFuncionario").hasRole("FUNCIONARIO")
                 .requestMatchers(HttpMethod.POST, "/categorias/inserirCategoria").hasRole("FUNCIONARIO")
                 .requestMatchers(HttpMethod.DELETE, "/funcionarios/deletarFuncinario/{id}").hasRole("FUNCIONARIO")
+                .requestMatchers("/h2-console/**").permitAll()
                 
                 //mudar permissôes depois
                 
@@ -83,6 +85,8 @@ public class WebSecurityConfig {
         )
         .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
 
+        http.headers(headers -> headers.frameOptions().disable()); // configuração para o h2
+        
         JwtAuthenticationFilter jwtAuthenticationFilter = 
                 new JwtAuthenticationFilter(authenticationManager(
                         http.getSharedObject(AuthenticationConfiguration.class)),

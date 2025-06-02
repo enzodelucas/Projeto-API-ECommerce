@@ -3,15 +3,14 @@ package org.serratec.projetoFinal.domain;
 import java.util.ArrayList;
 import java.util.List;
 
-import ch.qos.logback.core.subst.Token.Type;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Pattern;
 
 @Entity
 public class Endereco {
@@ -30,6 +29,7 @@ public class Endereco {
 	
 	private String logradouro;
 	
+	@JsonManagedReference("endereco-cliente")
 	@OneToMany(mappedBy = "endereco", cascade = CascadeType.ALL)
 	private List<ClienteEndereco> clientes = new ArrayList<>();
 

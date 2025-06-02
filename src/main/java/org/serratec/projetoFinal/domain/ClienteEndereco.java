@@ -1,5 +1,7 @@
 package org.serratec.projetoFinal.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -14,12 +16,14 @@ public class ClienteEndereco {
 	private Long id;
 	
 	@ManyToOne
+	@JsonBackReference("cliente-endereco")
 	private Cliente cliente;
 	
 	@ManyToOne
+	@JsonBackReference("endereco-cliente")
 	private Endereco endereco;
 	
-	
+	ClienteEndereco() {}
 	
 	public ClienteEndereco(Cliente cliente,Endereco endereco) {
 		this.cliente = cliente;

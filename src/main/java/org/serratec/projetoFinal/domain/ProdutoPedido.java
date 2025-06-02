@@ -17,7 +17,6 @@ public class ProdutoPedido {
 	private Double valor = id.getProduto().getValor() * quantidade;
 	
 	
-	
 	public ProdutoPedido () {}
 
 

@@ -3,6 +3,7 @@ package org.serratec.projetoFinal.controller;
 import java.net.URI;
 import java.util.List;
 
+import org.serratec.projetoFinal.dto.ClienteAtualizarDTO;
 import org.serratec.projetoFinal.dto.ClienteDTO;
 import org.serratec.projetoFinal.dto.ClienteInserirDTO;
 import org.serratec.projetoFinal.dto.EnderecoClienteDTO;
@@ -12,11 +13,10 @@ import org.serratec.projetoFinal.service.ClienteService;
 import org.serratec.projetoFinal.service.EnderecoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -65,13 +65,13 @@ public class ClienteController {
 	}
 	
 	
-	@PostMapping("/inserirEndereco/me") //testar depois
+	@PostMapping("/inserirEndereco/me") //deu certo
 	public ResponseEntity<EnderecoClienteDTO> inserirEndereco(@Valid @RequestBody EnderecoInserirDTO enderecoIns) {	
 		EnderecoClienteDTO endereco = clienteService.inserirEndereco(enderecoIns);
 		URI uri = ServletUriComponentsBuilder
 				.fromCurrentRequest()
 				.path("{id}")
-				.buildAndExpand(endereco.getEnderecoDTO().getCep()) //teste
+				.buildAndExpand(endereco.getId()) //teste
 				.toUri();
 		
 		
@@ -79,22 +79,11 @@ public class ClienteController {
 		
 	}
 	
-	//colocar autenticação 
-	/*@PostMapping("/InserirEndereco/{id}")
-	public ResponseEntity<EnderecoDTO> inserirEndereco(@PathVariable Long id, @Valid @RequestBody EnderecoInserirDTO enderecoIns) {	
-		Cliente cliente = clienteService.listarId(id);
-		Endereco endereco = enderecoService.buscarInserirTeste(enderecoIns.getCep());	
-		ClienteEndereco clienteteste = new ClienteEndereco(cliente, endereco);
-		cliente.getEnderecos().add(clienteteste);
-		EnderecoDTO enderecoDTO = new EnderecoDTO(endereco);
-		clienteEnderecoRepository.save(clienteteste);
-		URI uri = ServletUriComponentsBuilder
-				.fromCurrentRequest()
-				.path("/{id}")
-				.buildAndExpand(endereco.getCep())
-				.toUri();
-		return ResponseEntity.created(uri).body(enderecoDTO);
-		
-	}*/ //CORRIGIR 
+	
+	@PutMapping("atualizarDados/me") // deu certo
+	public ResponseEntity<ClienteDTO> atualizarDados(@RequestBody ClienteAtualizarDTO clienteAtt){
+	ClienteDTO cliente = clienteService.atualizar(clienteAtt);
+		return ResponseEntity.ok(cliente);
+	}
 	
 }
