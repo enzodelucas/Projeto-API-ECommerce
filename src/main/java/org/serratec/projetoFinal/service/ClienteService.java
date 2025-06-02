@@ -18,6 +18,7 @@ import org.serratec.projetoFinal.exception.CpfException;
 import org.serratec.projetoFinal.exception.EmailException;
 import org.serratec.projetoFinal.exception.NaoEncontradoException;
 import org.serratec.projetoFinal.exception.SenhaException;
+import org.serratec.projetoFinal.exception.UsuarioNaoPermitidoException;
 import org.serratec.projetoFinal.repository.ClienteEnderecoRepository;
 import org.serratec.projetoFinal.repository.ClienteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -175,10 +176,15 @@ public class ClienteService {
 		Optional<ClienteEndereco> enderecoOpt = clienteEnderecoRepository.findById(Id);
 		if(enderecoOpt.isPresent()){
 			ClienteEndereco clienteEndereco = enderecoOpt.get();
+			 if (!cliente.getEnderecos().contains(clienteEndereco)) {
+			        throw new UsuarioNaoPermitidoException("Endereço não pertence ao cliente autenticado");
+			    }
 			enderecos.remove(clienteEndereco);
-		}
-		
+			clienteRepository.save(cliente);
+			clienteEnderecoRepository.delete(clienteEndereco);
+		} else {
 		throw new NaoEncontradoException("Endereço não encontrado");
+		}
 		
 	}
 }

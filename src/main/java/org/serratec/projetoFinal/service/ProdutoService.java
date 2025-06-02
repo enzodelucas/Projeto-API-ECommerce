@@ -7,9 +7,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.serratec.projetoFinal.domain.Categoria;
-import org.serratec.projetoFinal.domain.Cliente;
 import org.serratec.projetoFinal.domain.Produto;
-import org.serratec.projetoFinal.dto.ProdutoDTO;
 import org.serratec.projetoFinal.dto.ProdutoDTO;
 import org.serratec.projetoFinal.dto.ProdutoInserirDTO;
 import org.serratec.projetoFinal.exception.CategoriaException;
@@ -18,6 +16,7 @@ import org.serratec.projetoFinal.repository.CategoriaRepository;
 import org.serratec.projetoFinal.repository.ClienteRepository;
 import org.serratec.projetoFinal.repository.ProdutoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 @Service

@@ -87,7 +87,7 @@ public class ClienteController {
 		return ResponseEntity.ok(cliente);
 	}
 	
-	@DeleteMapping("/deletarEndereco/{id}")
+	@DeleteMapping("/me/deletarEndereco/{id}")
 	public ResponseEntity<Void> deletarEndereco(@PathVariable Long id) {
 		clienteService.deletarEndereço(id);
 		return ResponseEntity.noContent().build();
