@@ -69,7 +69,7 @@ public class PedidoService {
 		double valorTotal = 0.0;
 		
 		List<ProdutoPedido> produtos = new ArrayList<>();
-		ProdutoPedido porProduto = new ProdutoPedido();
+	
 		
 		for (ProdutoInserir produtoInserir : pedidoIns.getProduto()) {
 			Optional<Produto> produto = produtoRepository.findById(produtoInserir.getId());
@@ -78,10 +78,12 @@ public class PedidoService {
 			}
 			Produto produtoEncontrado = produto.get();
 			
+			ProdutoPedido porProduto = new ProdutoPedido();
 			porProduto.setProduto(produtoEncontrado);
 			porProduto.setQuantidade(produtoInserir.getQuantidade());
 			porProduto.setValor(produtoEncontrado.getValor() * porProduto.getQuantidade());
-	
+			porProduto.setPedido(pedido);
+			 
 			valorTotal += porProduto.getValor();
 			produtos.add(porProduto);
 		
@@ -91,15 +93,14 @@ public class PedidoService {
 		if (pedido.getFormaPgto() == FormaPgto.PIX) {
 			Double desconto = valorTotal * 0.10;
 			pedido.setDesconto(desconto);
-			valorTotal += desconto;
+			valorTotal -= desconto;
 		}
 		pedido.setProdutos(produtos);
 		pedido.setValorFinal(valorTotal);
 		
-	//	porProduto.setId(pedido.getId(), produto.);
+
 		pedidoRepository.save(pedido);
-		porProduto.setPedido(pedido);
-		produtoPedidoRepository.save(porProduto);
+		produtoPedidoRepository.saveAll(produtos);
 		
 		PedidoDTO pedidoDTO = new PedidoDTO(pedido);
 		
