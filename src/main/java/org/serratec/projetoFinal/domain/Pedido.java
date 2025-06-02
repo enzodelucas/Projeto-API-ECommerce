@@ -1,7 +1,5 @@
 package org.serratec.projetoFinal.domain;
 
-
-
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -36,6 +34,7 @@ public class Pedido {
 	@JoinColumn(name = "id_cliente")
 	private Cliente cliente;
 	
+	@JsonBackReference("pedido")
 	@ManyToOne
 	@JoinColumn(name = "id_enderecoEntrega")
 	private ClienteEndereco enderecoEntrega;

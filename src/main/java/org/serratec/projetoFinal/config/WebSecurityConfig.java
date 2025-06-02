@@ -79,6 +79,8 @@ public class WebSecurityConfig {
                 .requestMatchers(HttpMethod.POST, "/usuarios/**").permitAll()
                 .requestMatchers(HttpMethod.DELETE, "/clientes/me/deletarEndereco/{id}").hasRole("CLIENTE")
                 .requestMatchers(HttpMethod.POST, "/clientes/inserirPedido/me").hasRole("CLIENTE")
+                .requestMatchers(HttpMethod.GET, "/login/historico").permitAll()
+                .requestMatchers(HttpMethod.GET, "/clientes/me/listarPedidoId/{id}").hasRole("CLIENTE")
                 
                 .requestMatchers("/h2-console/**").permitAll()
                 

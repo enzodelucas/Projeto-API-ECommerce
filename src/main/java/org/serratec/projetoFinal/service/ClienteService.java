@@ -8,12 +8,13 @@ import org.serratec.projetoFinal.config.MailConfig;
 import org.serratec.projetoFinal.domain.Cliente;
 import org.serratec.projetoFinal.domain.ClienteEndereco;
 import org.serratec.projetoFinal.domain.Endereco;
+import org.serratec.projetoFinal.domain.Pedido;
 import org.serratec.projetoFinal.dto.ClienteAtualizarDTO;
 import org.serratec.projetoFinal.dto.ClienteDTO;
 import org.serratec.projetoFinal.dto.ClienteInserirDTO;
 import org.serratec.projetoFinal.dto.EnderecoClienteDTO;
-import org.serratec.projetoFinal.dto.EnderecoDTO;
 import org.serratec.projetoFinal.dto.EnderecoInserirDTO;
+import org.serratec.projetoFinal.dto.PedidoDTO;
 import org.serratec.projetoFinal.exception.CpfException;
 import org.serratec.projetoFinal.exception.EmailException;
 import org.serratec.projetoFinal.exception.NaoEncontradoException;
@@ -21,6 +22,7 @@ import org.serratec.projetoFinal.exception.SenhaException;
 import org.serratec.projetoFinal.exception.UsuarioNaoPermitidoException;
 import org.serratec.projetoFinal.repository.ClienteEnderecoRepository;
 import org.serratec.projetoFinal.repository.ClienteRepository;
+import org.serratec.projetoFinal.repository.PedidoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -45,6 +47,9 @@ public class ClienteService {
 
 	@Autowired
 	private AutenticacaoService autenticacaoService;
+	
+	@Autowired
+	private PedidoRepository pedidoRepository;
 
 	@Autowired
 	BCryptPasswordEncoder encoder;
@@ -125,20 +130,6 @@ public class ClienteService {
 
 	}
 
-	/*	public ClienteDTO atualizarPorId(Long id, ClienteInserirDTO clienteIns) {
-		Optional<Cliente> clienteOpt = clienteRepository.findById(id);
-		if(clienteOpt.isPresent()) {
-			Cliente cliente = clienteOpt.get();
-			cliente.setNome(clienteIns.getNome());
-			cliente.setTelefone(clienteIns.getTelefone());
-			cliente.setSenha(clienteIns.getSenha());
-			cliente = clienteRepository.save(cliente);
-			ClienteDTO clienteDTO = new ClienteDTO(cliente);
-			mailConfig.sendEmailAtt(cliente.getEmail(), "Atualização de cadastro do cliente", cliente.toString());
-			return clienteDTO;
-		}
-		return null;
-	}*/
 
 	public ClienteDTO atualizar(ClienteAtualizarDTO clienteAt) { // personalizar mais as mensagens de erro depois, se quiser
 		Cliente cliente = autenticacaoService.clienteAutenticacao();
@@ -185,6 +176,20 @@ public class ClienteService {
 		} else {
 		throw new NaoEncontradoException("Endereço não encontrado");
 		}
-		
 	}
+	
+	public PedidoDTO listarPedidosId(Long id) {
+		Cliente cliente = autenticacaoService.clienteAutenticacao();
+		List<Pedido> pedidos = cliente.getPedidos();
+		Optional<Pedido> pedidosOpt = pedidoRepository.findById(id);
+		if(pedidosOpt.isPresent()) {
+			Pedido pedidoId = pedidosOpt.get();
+			PedidoDTO pedidoDTO = new PedidoDTO(pedidoId);
+			return pedidoDTO;
+		}else {
+			throw new NaoEncontradoException("Pedido não encontrado");
+		}
+	}
+	
+
 }

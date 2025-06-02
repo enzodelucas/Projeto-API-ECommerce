@@ -106,5 +106,12 @@ public class ClienteController {
 		return	ResponseEntity.created(uri).body(pedidoDTO);
 	}
 	
+	@GetMapping("/me/listarPedidoId/{id}")
+	public ResponseEntity<PedidoDTO> listarPedidoId(@PathVariable Long id){
+		PedidoDTO pedidoDTO = clienteService.listarPedidosId(id);
+		return ResponseEntity.ok(pedidoDTO);
+		
+	}
+	
 	
 }
