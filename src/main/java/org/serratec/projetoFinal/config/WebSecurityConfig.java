@@ -76,6 +76,7 @@ public class WebSecurityConfig {
                 .requestMatchers(HttpMethod.POST, "/funcionarios/inserirFuncionario").hasRole("FUNCIONARIO")
                 .requestMatchers(HttpMethod.POST, "/categorias/inserirCategoria").hasRole("FUNCIONARIO")
                 .requestMatchers(HttpMethod.DELETE, "/funcionarios/deletarFuncinario/{id}").hasRole("FUNCIONARIO")
+                .requestMatchers(HttpMethod.POST, "/usuarios/**").permitAll()
                 .requestMatchers("/h2-console/**").permitAll()
                 
                 //mudar permissôes depois

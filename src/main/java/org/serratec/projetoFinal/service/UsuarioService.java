@@ -1,7 +1,7 @@
 package org.serratec.projetoFinal.service;
 
 import java.time.LocalDateTime;
-import java.util.Random;
+import java.util.UUID;
 
 import org.serratec.projetoFinal.config.MailConfig;
 import org.serratec.projetoFinal.domain.CodigoRecuperacao;
@@ -37,8 +37,8 @@ public class UsuarioService {
 			throw new NaoEncontradoException("Nenhum usuário encontrado.");
 		}
 		CodigoRecuperacao codigoRecuperacao = new CodigoRecuperacao();
-		Random random = new Random();
-		String codigo = random.toString();
+		
+		String codigo = UUID.randomUUID().toString().substring(0, 8);
 
 		LocalDateTime dataExpiracao = LocalDateTime.now().plusHours(1);
 
