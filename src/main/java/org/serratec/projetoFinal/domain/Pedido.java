@@ -134,8 +134,13 @@ public class Pedido {
 		this.desconto = desconto;
 	}
 	
-
-	
-	
-	
+	@Override
+	public String toString() {
+		return "Produtos: " + produtos + 
+				"\nData do Pedido: " + dataPedido + 
+				 "\nDesconto: " + desconto +
+				 "Valor final: " + valorFinal +
+				"\nForma de pagamento: " + formaPgto +
+				"Status do pedido " + status;
+	}
 }

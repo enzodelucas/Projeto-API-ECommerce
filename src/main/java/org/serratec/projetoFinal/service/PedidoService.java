@@ -2,6 +2,7 @@ package org.serratec.projetoFinal.service;
 
 import java.util.Optional;
 
+import org.serratec.projetoFinal.config.MailConfig;
 import org.serratec.projetoFinal.domain.Pedido;
 import org.serratec.projetoFinal.domain.ProdutoPedido;
 import org.serratec.projetoFinal.dto.PedidoDTO;
@@ -25,6 +26,11 @@ public class PedidoService {
 	@Autowired
 	ProdutoRepository produtoRepository;
 	
+	@Autowired
+	MailConfig mailConfig;
+	
+	
+	
 	public PedidoDTO inserirPedido(PedidoInserirDTO pedidoIns, Long id) {
 		ProdutoPedido produtoPedido = new ProdutoPedido();
 		return null;
@@ -37,6 +43,9 @@ public class PedidoService {
 			pedido.setStatus(Status.CANCELADO);
 			 pedidoRepository.save(pedido);
 			 PedidoDTO pedidoDTO = new PedidoDTO(pedido);
+			 
+			 mailConfig.sendEmailAttStatus(pedido.getCliente().getEmail(), "Atualização no status do pedido", pedido.toString());
+			 
 			 return pedidoDTO;
 		}
 		
@@ -51,6 +60,9 @@ public class PedidoService {
 			pedido.setStatus(Status.ENTREGUE);
 			 pedidoRepository.save(pedido);
 			 PedidoDTO pedidoDTO = new PedidoDTO(pedido);
+			 
+			 mailConfig.sendEmailAttStatus(pedido.getCliente().getEmail(), "Atualização no status do pedido", pedido.toString());
+			 
 			 return pedidoDTO;
 		}
 		

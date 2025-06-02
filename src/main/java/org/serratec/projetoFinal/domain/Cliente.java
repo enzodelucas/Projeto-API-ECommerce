@@ -87,7 +87,10 @@ public class Cliente extends Usuario {
 
 	@Override
 	public String toString() {
-		return "mudar depois";
+		return "Nome: " + nome +
+				"CPF: " + cpf +
+				"\nE-mail: " + getEmail() +
+				"\nTelefone: " + telefone;
 	}
 
 	

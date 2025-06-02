@@ -37,4 +37,12 @@ public class MailConfig {
         message.setText("Solicitação de recuperação de senha \nUtilize o código para redefinir sua senha: " + codigo + "\n\nE-COMMERCE GRUPO 03.");
         javaMailSender.send(message);
     }
+	
+	public void sendEmailAttStatus(String para, String assunto, String texto) {
+        SimpleMailMessage message = new SimpleMailMessage();
+        message.setFrom("lojagrupo03@gmail.com");
+        message.setTo(para);
+        message.setSubject(assunto);
+        message.setText("Status do pedido atualizado: \nDados do pedido: \n" + texto + "\n\nE-COMMERCE GRUPO 0");
+	}
 }
