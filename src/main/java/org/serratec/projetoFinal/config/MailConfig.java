@@ -28,4 +28,13 @@ public class MailConfig {
         message.setText("Atualização de cadastro concluída com sucesso! \n Novos dados: \n" + texto + "\n\nE-COMMERCE GRUPO 03.");
         javaMailSender.send(message);
     }
+	
+	public void sendCodigoRecuperacao(String para, String codigo) {
+        SimpleMailMessage message = new SimpleMailMessage();
+        message.setFrom("lojagrupo03@gmail.com");
+        message.setTo(para);
+        message.setSubject("Recuperação de Senha");
+        message.setText("Solicitação de recuperação de senha \nUtilize o código para redefinir sua senha: " + codigo + "\n\nE-COMMERCE GRUPO 03.");
+        javaMailSender.send(message);
+    }
 }
