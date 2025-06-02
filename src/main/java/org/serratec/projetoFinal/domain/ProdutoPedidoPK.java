@@ -3,6 +3,8 @@ package org.serratec.projetoFinal.domain;
 import java.io.Serializable;
 import java.util.Objects;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import jakarta.persistence.Embeddable;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
@@ -13,12 +15,12 @@ public class ProdutoPedidoPK implements Serializable{
 
 	private static final long serialVersionUID = 1L;
 
-
+	@JsonBackReference
 	@ManyToOne
 	@JoinColumn(name = "id_produto")
 	private Produto produto;
 	
-	
+	@JsonBackReference
 	@ManyToOne
 	@JoinColumn(name = "id_pedido")
 	private Pedido pedido;

@@ -8,9 +8,11 @@ import org.serratec.projetoFinal.dto.ClienteDTO;
 import org.serratec.projetoFinal.dto.ClienteInserirDTO;
 import org.serratec.projetoFinal.dto.EnderecoClienteDTO;
 import org.serratec.projetoFinal.dto.EnderecoInserirDTO;
-import org.serratec.projetoFinal.repository.ClienteEnderecoRepository;
+import org.serratec.projetoFinal.dto.PedidoDTO;
+import org.serratec.projetoFinal.dto.PedidoInserirDTO;
 import org.serratec.projetoFinal.service.ClienteService;
 import org.serratec.projetoFinal.service.EnderecoService;
+import org.serratec.projetoFinal.service.PedidoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -36,7 +38,7 @@ public class ClienteController {
 	EnderecoService enderecoService;
 	
 	@Autowired
-	ClienteEnderecoRepository clienteEnderecoRepository;
+	PedidoService pedidoService;
 	
 	@PostMapping
 	public ResponseEntity<ClienteDTO> inserirCliente(@Valid @RequestBody ClienteInserirDTO clienteIns) {
@@ -92,4 +94,17 @@ public class ClienteController {
 		clienteService.deletarEndereço(id);
 		return ResponseEntity.noContent().build();
 	}
+	
+	@PostMapping("/inserirPedido/me")
+	public ResponseEntity<PedidoDTO> inserirPedido(@Valid @RequestBody PedidoInserirDTO pedidoIns){
+		PedidoDTO pedidoDTO = pedidoService.inserirPedido(pedidoIns);
+		URI uri = ServletUriComponentsBuilder
+				.fromCurrentRequest()
+				.path("{id}")
+				.buildAndExpand(pedidoDTO.getId())
+				.toUri();
+		return	ResponseEntity.created(uri).body(pedidoDTO);
+	}
+	
+	
 }

@@ -14,7 +14,7 @@ public class ProdutoPedido {
 	@NotNull(message = "A quantidade não pode ser vazia.")
 	private Integer quantidade;
 	
-	private Double valor = id.getProduto().getValor() * quantidade;
+	private Double valor;
 	
 	
 	public ProdutoPedido () {}
