@@ -20,8 +20,10 @@ import org.serratec.projetoFinal.exception.SenhaException;
 import org.serratec.projetoFinal.repository.ClienteEnderecoRepository;
 import org.serratec.projetoFinal.repository.ClienteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 @Service
 public class ClienteService {
@@ -136,25 +138,25 @@ public class ClienteService {
 		return null;
 	}*/
 
-	public ClienteDTO atualizar(ClienteAtualizarDTO clienteAt) {
+	public ClienteDTO atualizar(ClienteAtualizarDTO clienteAt) { // personalizar mais as mensagens de erro depois, se quiser
 		Cliente cliente = autenticacaoService.clienteAutenticacao();
 
 		if (clienteAt.getNome() != null) {
 			if (clienteAt.getNome().length() < 3 || clienteAt.getNome().length() > 150) {
-				throw new IllegalArgumentException("Nome deve ter entre 3 e 150 caracteres.");
+				throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Nome deve ter entre 3 e 150 caracteres.");
 			}
 			cliente.setNome(clienteAt.getNome());
 		}
 		if (clienteAt.getSenha() != null) {
 			if (clienteAt.getSenha().length() < 8 ) {
-				throw new IllegalArgumentException("Senha deve ter no mínimo 8 caracteres.");
+				throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Senha deve ter no mínimo 8 caracteres.");
 			}
 			String senhaCriptografada = encoder.encode(clienteAt.getSenha());
 			cliente.setSenha(senhaCriptografada);
 		}
 		if (clienteAt.getTelefone() != null) {
 			if (!clienteAt.getTelefone().matches("\\d{11}")) {
-				throw new IllegalArgumentException("Telefone deve ter 11 dígitos.");
+				throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Telefone deve ter 11 dígitos.");
 			}
 			cliente.setTelefone(clienteAt.getTelefone());
 		}
