@@ -16,7 +16,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
+import org.serratec.projetoFinal.domain.Categoria;
 import org.serratec.projetoFinal.domain.Pedido;
 import org.serratec.projetoFinal.dto.ClienteDTO;
 import org.serratec.projetoFinal.dto.FuncionarioDTO;
@@ -37,6 +37,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.validation.Valid;
 
 @RestController
@@ -53,6 +58,17 @@ public class FuncionarioController {
 	ClienteService clienteService;
 
 	@PostMapping("/inserirFuncionario")
+	@Operation(summary = "Insere um novo funcionario", 
+	description = "A resposta lista os dados do fucnionario inserido")
+@ApiResponses(value = {
+			@ApiResponse(responseCode = "200",
+			content = {@Content(schema = @Schema(implementation = FuncionarioDTO.class), 
+			mediaType = "application/json")}, description = "Retorna o funcionario inserido"),
+			@ApiResponse(responseCode = "401", description = "Erro de autenticação"),
+			@ApiResponse(responseCode = "403", description = "Não há permissão para acessar o recurso"),
+			@ApiResponse(responseCode = "404", description = "Recurso não encontrado"),
+			@ApiResponse(responseCode = "505", description = "Exceção interna da aplicação") 
+		})
 	public ResponseEntity<FuncionarioDTO> inserirFuncionario(@Valid @RequestBody FuncionarioInserirDTO funcionarioIns) {
 		FuncionarioDTO funcionarioDTO = funcionarioService.inserir(funcionarioIns);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(funcionarioDTO.getId())
@@ -61,31 +77,101 @@ public class FuncionarioController {
 	}
 	
 	@GetMapping("/listarFuncionarios")
+	@Operation(summary = "Liata os funcionarios", 
+	description = "A resposta lista os dados dos fucnionarios")
+@ApiResponses(value = {
+			@ApiResponse(responseCode = "200",
+			content = {@Content(schema = @Schema(implementation = FuncionarioDTO.class), 
+			mediaType = "application/json")}, description = "Retorna os funcionarios"),
+			@ApiResponse(responseCode = "401", description = "Erro de autenticação"),
+			@ApiResponse(responseCode = "403", description = "Não há permissão para acessar o recurso"),
+			@ApiResponse(responseCode = "404", description = "Recurso não encontrado"),
+			@ApiResponse(responseCode = "505", description = "Exceção interna da aplicação") 
+		})
 	public ResponseEntity<List<FuncionarioDTO>> listarFuncionarios() {
 		return ResponseEntity.ok(funcionarioService.listar());
 	}
 	
-	@DeleteMapping("/deletarFuncinario/{id}") //deu certo
+	@DeleteMapping("/deletarFuncinario/{id}") 
+	@Operation(summary = "deleta um funcionario", 
+	description = "A resposta deleta um fucnionario por id")
+	@ApiResponses(value = {
+			@ApiResponse(responseCode = "200",
+			description = "Retorna ok"),
+			@ApiResponse(responseCode = "401", description = "Erro de autenticação"),
+			@ApiResponse(responseCode = "403", description = "Não há permissão para acessar o recurso"),
+			@ApiResponse(responseCode = "404", description = "Recurso não encontrado"),
+			@ApiResponse(responseCode = "505", description = "Exceção interna da aplicação") 
+		})
 	public ResponseEntity<Void> deletarfuncioanrio(@PathVariable Long id) {
 		funcionarioService.deletar(id);
 		return ResponseEntity.noContent().build();
 	}
 	
-	@GetMapping("/listarPedidos") //deu certo
+	@GetMapping("/listarPedidos") 
+	@Operation(summary = "Lista todos os pedidos", 
+	description = "A resposta lista os pedidos")
+@ApiResponses(value = {
+			@ApiResponse(responseCode = "200",
+			content = {@Content(schema = @Schema(implementation = PedidoDTO.class), 
+			mediaType = "application/json")}, description = "Retorna os pedidos"),
+			@ApiResponse(responseCode = "401", description = "Erro de autenticação"),
+			@ApiResponse(responseCode = "403", description = "Não há permissão para acessar o recurso"),
+			@ApiResponse(responseCode = "404", description = "Recurso não encontrado"),
+			@ApiResponse(responseCode = "505", description = "Exceção interna da aplicação") 
+		})
 	public ResponseEntity<List<PedidoDTO>> listar(){
 		return ResponseEntity.ok(pedidoService.listaTodosPedidos());
 	}
 	
 	@PutMapping("/editarStatusPedido/{id}")
+	@Operation(summary = "Edita o status do pedido por id", 
+	description = "A resposta lista o pedido com o status editado")
+@ApiResponses(value = {
+			@ApiResponse(responseCode = "200",
+			content = {@Content(schema = @Schema(implementation = PedidoDTO.class), 
+			mediaType = "application/json")}, description = "Retorna o pedido editado"),
+			@ApiResponse(responseCode = "401", description = "Erro de autenticação"),
+			@ApiResponse(responseCode = "403", description = "Não há permissão para acessar o recurso"),
+			@ApiResponse(responseCode = "404", description = "Recurso não encontrado"),
+			@ApiResponse(responseCode = "505", description = "Exceção interna da aplicação") 
+		})
 	public ResponseEntity<PedidoDTO> editarStatus(@PathVariable Long id, @Valid @RequestBody PedidoAtualizarStatusDTO pedidoatt){
 		PedidoDTO pedidoDTO = pedidoService.atualizarStatusPedido(id, pedidoatt);
 		return ResponseEntity.ok(pedidoDTO);
 	}
 	
 	@GetMapping("listarCliente/{id}")
+	@Operation(summary = "Lista um cliente por id", 
+	description = "A resposta lista o cliente escolhido")
+@ApiResponses(value = {
+			@ApiResponse(responseCode = "200",
+			content = {@Content(schema = @Schema(implementation = ClienteDTO.class), 
+			mediaType = "application/json")}, description = "Retorna os dados do cliente"),
+			@ApiResponse(responseCode = "401", description = "Erro de autenticação"),
+			@ApiResponse(responseCode = "403", description = "Não há permissão para acessar o recurso"),
+			@ApiResponse(responseCode = "404", description = "Recurso não encontrado"),
+			@ApiResponse(responseCode = "505", description = "Exceção interna da aplicação") 
+		})
 	public  ResponseEntity<ClienteDTO> listarCliente(@PathVariable Long id){
 		ClienteDTO clienteDTO = clienteService.listarId(id);
 		return ResponseEntity.ok(clienteDTO);
+	}
+	
+	@GetMapping("/listarClientes")
+	@Operation(summary = "Lista todos os clientes", 
+	description = "A resposta lista os dados dos clientes")
+@ApiResponses(value = {
+			@ApiResponse(responseCode = "200",
+			content = {@Content(schema = @Schema(implementation = ClienteDTO.class), 
+			mediaType = "application/json")}, description = "Retorna todos os cliente"),
+			@ApiResponse(responseCode = "401", description = "Erro de autenticação"),
+			@ApiResponse(responseCode = "403", description = "Não há permissão para acessar o recurso"),
+			@ApiResponse(responseCode = "404", description = "Recurso não encontrado"),
+			@ApiResponse(responseCode = "505", description = "Exceção interna da aplicação") 
+		})
+	public ResponseEntity<List<ClienteDTO>> listarClientes() {
+		return ResponseEntity.ok(clienteService.listar());
 	}
 	
 	@GetMapping(value = "/pedidos/excel", produces = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")

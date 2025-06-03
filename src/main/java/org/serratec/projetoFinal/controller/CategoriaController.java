@@ -34,6 +34,17 @@ public class CategoriaController {
 
 	
 	@PostMapping("/inserirCategoria")
+	@Operation(summary = "Insere uma nova categorias", 
+	description = "A resposta lista os dados da categoria inserida")
+@ApiResponses(value = {
+			@ApiResponse(responseCode = "200",
+			content = {@Content(schema = @Schema(implementation = Categoria.class), 
+			mediaType = "application/json")}, description = "Retorna a Categoria inserida"),
+			@ApiResponse(responseCode = "401", description = "Erro de autenticação"),
+			@ApiResponse(responseCode = "403", description = "Não há permissão para acessar o recurso"),
+			@ApiResponse(responseCode = "404", description = "Recurso não encontrado"),
+			@ApiResponse(responseCode = "505", description = "Exceção interna da aplicação") 
+		})
 	public ResponseEntity<Categoria> inserirCategoria(@Valid @RequestBody Categoria categoria) {
 		categoriaService.inserir(categoria);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(categoria.getId())
@@ -47,7 +58,7 @@ public class CategoriaController {
 @ApiResponses(value = {
 			@ApiResponse(responseCode = "200",
 			content = {@Content(schema = @Schema(implementation = Categoria.class), 
-			mediaType = "application/json")}, description = "Retorna todas as Categorias"),
+			mediaType = "application/json")}, description = "Retorna todas as categorias"),
 			@ApiResponse(responseCode = "401", description = "Erro de autenticação"),
 			@ApiResponse(responseCode = "403", description = "Não há permissão para acessar o recurso"),
 			@ApiResponse(responseCode = "404", description = "Recurso não encontrado"),
@@ -58,6 +69,17 @@ public class CategoriaController {
 	}
 
 	@PutMapping("/{id}")
+	@Operation(summary = "Edita uma categorias", 
+	description = "A resposta lista os dados da categoria editada")
+@ApiResponses(value = {
+			@ApiResponse(responseCode = "200",
+			content = {@Content(schema = @Schema(implementation = Categoria.class), 
+			mediaType = "application/json")}, description = "Retorna a categoria editada"),
+			@ApiResponse(responseCode = "401", description = "Erro de autenticação"),
+			@ApiResponse(responseCode = "403", description = "Não há permissão para acessar o recurso"),
+			@ApiResponse(responseCode = "404", description = "Recurso não encontrado"),
+			@ApiResponse(responseCode = "505", description = "Exceção interna da aplicação") 
+		})
 	public ResponseEntity<Categoria> atualizarCategoria(@PathVariable Long id,
 			@Valid @RequestBody Categoria categoria) {
 		Categoria categoriaAtt = categoriaService.editar(id, categoria);
@@ -65,6 +87,17 @@ public class CategoriaController {
 	}
 	
 	@GetMapping("/{id}")
+	@Operation(summary = "Lista uma categoria por id", 
+	description = "A resposta lista os dados da categoria escolhida")
+@ApiResponses(value = {
+			@ApiResponse(responseCode = "200",
+			content = {@Content(schema = @Schema(implementation = Categoria.class), 
+			mediaType = "application/json")}, description = "Retorna a categoria escolhida"),
+			@ApiResponse(responseCode = "401", description = "Erro de autenticação"),
+			@ApiResponse(responseCode = "403", description = "Não há permissão para acessar o recurso"),
+			@ApiResponse(responseCode = "404", description = "Recurso não encontrado"),
+			@ApiResponse(responseCode = "505", description = "Exceção interna da aplicação") 
+		})
 	public ResponseEntity<Categoria> buscarCategoria(@PathVariable Long id){
 		Categoria categoria = categoriaService.buscarCategoria(id);
 		

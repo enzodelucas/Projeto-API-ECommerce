@@ -8,14 +8,12 @@ import org.serratec.projetoFinal.config.MailConfig;
 import org.serratec.projetoFinal.domain.Cliente;
 import org.serratec.projetoFinal.domain.ClienteEndereco;
 import org.serratec.projetoFinal.domain.Endereco;
-import org.serratec.projetoFinal.domain.Pedido;
 import org.serratec.projetoFinal.dto.ClienteAtualizarDTO;
 import org.serratec.projetoFinal.dto.ClienteDTO;
 import org.serratec.projetoFinal.dto.ClienteInserirDTO;
 import org.serratec.projetoFinal.dto.EnderecoAtualizarDTO;
 import org.serratec.projetoFinal.dto.EnderecoClienteDTO;
 import org.serratec.projetoFinal.dto.EnderecoInserirDTO;
-import org.serratec.projetoFinal.dto.PedidoDTO;
 import org.serratec.projetoFinal.exception.CpfException;
 import org.serratec.projetoFinal.exception.EmailException;
 import org.serratec.projetoFinal.exception.NaoEncontradoException;
@@ -33,7 +31,6 @@ import org.springframework.web.server.ResponseStatusException;
 @Service
 public class ClienteService {
 
-
 	@Autowired
 	private ClienteRepository clienteRepository;
 
@@ -48,18 +45,14 @@ public class ClienteService {
 
 	@Autowired
 	private AutenticacaoService autenticacaoService;
-	
+
 	@Autowired
 	private PedidoRepository pedidoRepository;
 
 	@Autowired
 	BCryptPasswordEncoder encoder;
-	
 
-
-
-	public ClienteDTO inserir(ClienteInserirDTO clienteIns) 
-			throws EmailException, SenhaException, CpfException {
+	public ClienteDTO inserir(ClienteInserirDTO clienteIns) throws EmailException, SenhaException, CpfException {
 		if (clienteRepository.findByEmail(clienteIns.getEmail()) != null) {
 			throw new EmailException("Usuário já cadastrado.");
 		}
@@ -80,7 +73,6 @@ public class ClienteService {
 
 		ClienteDTO clienteDTO = new ClienteDTO(cliente);
 
-
 		return clienteDTO;
 
 	}
@@ -94,39 +86,37 @@ public class ClienteService {
 		return clienteDTO;
 	}
 
-
-	public ClienteDTO buscarDados() { // por autenticação
-		Cliente cliente= autenticacaoService.clienteAutenticacao();
+	public ClienteDTO buscarDados() { 
+		Cliente cliente = autenticacaoService.clienteAutenticacao();
 		ClienteDTO clienteDTO = new ClienteDTO(cliente);
 		return clienteDTO;
 	}
 
-	public void deletar() { // por autenticação
+	public void deletar() {
 		Cliente cliente = autenticacaoService.clienteAutenticacao();
 		clienteRepository.delete(cliente);
 	}
 
-	public EnderecoClienteDTO inserirEndereco (EnderecoInserirDTO enderecoIns) { // por autenticação
+	public EnderecoClienteDTO inserirEndereco(EnderecoInserirDTO enderecoIns) { 
 		Cliente cliente = autenticacaoService.clienteAutenticacao();
 		Endereco endereco = enderecoService.buscarInserir(enderecoIns.getCep());
 		String complemento = enderecoIns.getComplemento();
 		Integer numero = enderecoIns.getNumero();
-		
 
 		ClienteEndereco clienteE = new ClienteEndereco(cliente, endereco, complemento, numero);
 
 		clienteEnderecoRepository.save(clienteE);
 
 		cliente.getEnderecos().add(clienteE);
-		endereco.getClientes().add(clienteE); // trocar depois talvez
+		endereco.getClientes().add(clienteE); 
 
-		EnderecoClienteDTO enderecoC = new EnderecoClienteDTO (clienteE);
+		EnderecoClienteDTO enderecoC = new EnderecoClienteDTO(clienteE);
 		return enderecoC;
 
 	}
 
-
-	public ClienteDTO atualizar(ClienteAtualizarDTO clienteAt) { // personalizar mais as mensagens de erro depois, se quiser
+	public ClienteDTO atualizar(ClienteAtualizarDTO clienteAt) { 
+																	
 		Cliente cliente = autenticacaoService.clienteAutenticacao();
 
 		if (clienteAt.getNome() != null) {
@@ -136,15 +126,15 @@ public class ClienteService {
 			cliente.setNome(clienteAt.getNome());
 		}
 		if (clienteAt.getSenha() != null) {
-			if (clienteAt.getSenha().length() < 8 ) {
-				throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Senha deve ter no mínimo 8 caracteres.");
+			if (clienteAt.getSenha().length() < 8) {
+				throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Senha deve ter no mínimo 8 caracteres.");
 			}
 			String senhaCriptografada = encoder.encode(clienteAt.getSenha());
 			cliente.setSenha(senhaCriptografada);
 		}
 		if (clienteAt.getTelefone() != null) {
 			if (!clienteAt.getTelefone().matches("\\d{11}")) {
-				throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Telefone deve ter 11 dígitos.");
+				throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Telefone deve ter 11 dígitos.");
 			}
 			cliente.setTelefone(clienteAt.getTelefone());
 		}
@@ -155,40 +145,39 @@ public class ClienteService {
 		mailConfig.sendEmailAtt(cliente.getEmail(), "Atualização de cadastro do cliente", cliente.toString());
 		return clienteDTO;
 	}
-	
+
 	public void deletarEndereço(Long Id) {
 		Cliente cliente = autenticacaoService.clienteAutenticacao();
 		List<ClienteEndereco> enderecos = cliente.getEnderecos();
 		Optional<ClienteEndereco> enderecoOpt = clienteEnderecoRepository.findById(Id);
-		if(enderecoOpt.isPresent()){
+		if (enderecoOpt.isPresent()) {
 			ClienteEndereco clienteEndereco = enderecoOpt.get();
-			 if (!cliente.getEnderecos().contains(clienteEndereco)) {
-			        throw new UsuarioNaoPermitidoException("Endereço não pertence ao cliente autenticado");
-			    }
+			if (!cliente.getEnderecos().contains(clienteEndereco)) {
+				throw new UsuarioNaoPermitidoException("Endereço não pertence ao cliente autenticado");
+			}
 			enderecos.remove(clienteEndereco);
 			clienteRepository.save(cliente);
 			clienteEnderecoRepository.delete(clienteEndereco);
 		} else {
-		throw new NaoEncontradoException("Endereço não encontrado");
+			throw new NaoEncontradoException("Endereço não encontrado");
 		}
 	}
-	
-	
+
 	public EnderecoClienteDTO atualizarEnd(EnderecoAtualizarDTO endAtuDTO) {
 		Cliente cliente = autenticacaoService.clienteAutenticacao();
 		ClienteEndereco endereco = enderecoService.atualizarEndereco(endAtuDTO, cliente);
-	
+
 		EnderecoClienteDTO endAtu = new EnderecoClienteDTO(endereco);
 		return endAtu;
 	}
 
-	public ClienteDTO listarId(Long id) { //para o funcionario
-		 Optional<Cliente> nome = clienteRepository.findById(id);
-		 if(nome.isPresent()) {
-			 Cliente cliente = nome.get();
-			 ClienteDTO clienteDTO = new ClienteDTO(cliente);
-			 return clienteDTO;
-		 }
-		 throw new NaoEncontradoException("Cliente não encontrado.");
+	public ClienteDTO listarId(Long id) { // para o funcionario
+		Optional<Cliente> nome = clienteRepository.findById(id);
+		if (nome.isPresent()) {
+			Cliente cliente = nome.get();
+			ClienteDTO clienteDTO = new ClienteDTO(cliente);
+			return clienteDTO;
+		}
+		throw new NaoEncontradoException("Cliente não encontrado.");
 	}
 }

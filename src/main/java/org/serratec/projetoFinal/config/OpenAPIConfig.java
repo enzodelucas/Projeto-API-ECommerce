@@ -32,7 +32,7 @@ public class OpenAPIConfig {
 		prodServer.setDescription("URL do servidor de produção");
 		
 		Contact contact = new Contact();
-		contact.setEmail("contato@meudominio.com.br");
+		contact.setEmail("lojagrupo03@gmail.com");
 		contact.setName("Serratec");
 		contact.setUrl("https://www.meudominio.com.br");
 		

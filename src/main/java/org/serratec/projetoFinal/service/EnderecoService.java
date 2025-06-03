@@ -1,15 +1,14 @@
 package org.serratec.projetoFinal.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import org.serratec.projetoFinal.domain.Categoria;
 import org.serratec.projetoFinal.domain.Cliente;
 import org.serratec.projetoFinal.domain.ClienteEndereco;
 import org.serratec.projetoFinal.domain.Endereco;
 import org.serratec.projetoFinal.dto.EnderecoAtualizarDTO;
-import org.serratec.projetoFinal.dto.EnderecoDTO;
-import org.serratec.projetoFinal.exception.CategoriaException;
+import org.serratec.projetoFinal.dto.EnderecoClienteDTO;
 import org.serratec.projetoFinal.exception.NaoEncontradoException;
 import org.serratec.projetoFinal.repository.ClienteEnderecoRepository;
 import org.serratec.projetoFinal.repository.EnderecoRepository;
@@ -26,7 +25,8 @@ public class EnderecoService {
 	@Autowired
 	ClienteEnderecoRepository clienteEnderecoRepository;
 	
-	
+	@Autowired
+	AutenticacaoService autenticacaoService;
 
 	/*public EnderecoDTO buscarInserirDTO(String cep) {
 		Optional<Endereco> enderecoOpt = enderecoRepository.findByCep(cep);
@@ -100,5 +100,15 @@ public class EnderecoService {
 		throw new NaoEncontradoException("Cliente não foi encontrado");
 	}
 	
+	public List<EnderecoClienteDTO> listarEnderecoCliente() {
+        Cliente cliente = autenticacaoService.clienteAutenticacao();
+        List<ClienteEndereco> clienteEndereco = cliente.getEnderecos();
+        List<EnderecoClienteDTO> enderecoClienteDTO = new ArrayList();
+        for (ClienteEndereco enderecoCliente : clienteEndereco) {
+            EnderecoClienteDTO enderecoCli = new EnderecoClienteDTO(enderecoCliente);
+            enderecoClienteDTO.add(enderecoCli);
+        } 
+        return enderecoClienteDTO;
+    }
 }
 

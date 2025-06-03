@@ -90,7 +90,7 @@ public class WebSecurityConfig {
                 .requestMatchers(HttpMethod.GET, "/funcionarios/pedidos/excel").hasRole("FUNCIONARIO")
                 .requestMatchers(HttpMethod.GET, "/produtos/buscarPorValor").permitAll()
                 .requestMatchers(HttpMethod.GET, "/produtos/buscarPorNome").permitAll()
-                
+                .requestMatchers(HttpMethod.GET, "/clientes/me/listarEndereco").hasRole("CLIENTE")
                
                 .requestMatchers("/h2-console/**").permitAll()
                 .requestMatchers("/swagger-ui/**", "/v3/api-docs/**","/swagger-ui.html").permitAll() //teste
