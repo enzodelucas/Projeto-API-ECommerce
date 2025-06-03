@@ -3,6 +3,7 @@ package org.serratec.projetoFinal.controller;
 import java.net.URI;
 import java.util.List;
 
+
 import org.serratec.projetoFinal.domain.Categoria;
 import org.serratec.projetoFinal.exception.CategoriaException;
 import org.serratec.projetoFinal.service.CategoriaService;
@@ -17,6 +18,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.validation.Valid;
 
 @RequestMapping("/categorias")
@@ -36,6 +42,17 @@ public class CategoriaController {
 	}
 
 	@GetMapping
+	@Operation(summary = "Lista todos as categorias", 
+	description = "A resposta lista os dados das categorias")
+@ApiResponses(value = {
+			@ApiResponse(responseCode = "200",
+			content = {@Content(schema = @Schema(implementation = Categoria.class), 
+			mediaType = "application/json")}, description = "Retorna todas as Categorias"),
+			@ApiResponse(responseCode = "401", description = "Erro de autenticação"),
+			@ApiResponse(responseCode = "403", description = "Não há permissão para acessar o recurso"),
+			@ApiResponse(responseCode = "404", description = "Recurso não encontrado"),
+			@ApiResponse(responseCode = "505", description = "Exceção interna da aplicação") 
+		})
 	public ResponseEntity<List<Categoria>> listarCategorias() {
 		return ResponseEntity.ok(categoriaService.listar());
 	}
