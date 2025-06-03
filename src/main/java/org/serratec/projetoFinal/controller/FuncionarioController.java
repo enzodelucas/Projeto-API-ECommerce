@@ -6,7 +6,10 @@ import java.util.List;
 
 import org.serratec.projetoFinal.dto.FuncionarioDTO;
 import org.serratec.projetoFinal.dto.FuncionarioInserirDTO;
+import org.serratec.projetoFinal.dto.PedidoDTO;
+import org.serratec.projetoFinal.dto.ProdutoDTO;
 import org.serratec.projetoFinal.service.FuncionarioService;
+import org.serratec.projetoFinal.service.PedidoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -26,6 +29,10 @@ public class FuncionarioController {
 
 	@Autowired
 	FuncionarioService funcionarioService;
+	
+	@Autowired
+	PedidoService pedidoService;
+	
 
 	@PostMapping("/inserirFuncionario")
 	public ResponseEntity<FuncionarioDTO> inserirFuncionario(@Valid @RequestBody FuncionarioInserirDTO funcionarioIns) {
@@ -45,4 +52,11 @@ public class FuncionarioController {
 		funcionarioService.deletar(id);
 		return ResponseEntity.noContent().build();
 	}
+	
+	@GetMapping("/listarPedidos") //deu certo
+	public ResponseEntity<List<PedidoDTO>> listar(){
+		return ResponseEntity.ok(pedidoService.listaTodosPedidos());
+	}
+	
+	
 }

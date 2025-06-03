@@ -13,6 +13,7 @@ public class EnderecoDTO {
 	
 	private String logradouro;
 	
+	
 	public EnderecoDTO(Endereco endereco) {
 		this.cep = endereco.getCep();
 		this.bairro = endereco.getBairro();

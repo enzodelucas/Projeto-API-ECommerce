@@ -5,10 +5,14 @@ import org.serratec.projetoFinal.domain.ClienteEndereco;
 public class EnderecoClienteDTO {
 	private Long id;
 	private EnderecoDTO enderecoDTO;
+	private String complemento;
+	private Integer numero;
 	
 	public EnderecoClienteDTO(ClienteEndereco clienteEndereco) {
 		this.id = clienteEndereco.getId();
 		this.enderecoDTO = new EnderecoDTO(clienteEndereco.getEndereco());
+		this.complemento = clienteEndereco.getComplemento();
+		this.numero = clienteEndereco.getNumero();
 		
 	}
 
@@ -28,6 +32,23 @@ public class EnderecoClienteDTO {
 		this.enderecoDTO = enderecoDTO;
 	}
 
+	public String getComplemento() {
+		return complemento;
+	}
+
+	public void setComplemento(String complemento) {
+		this.complemento = complemento;
+	}
+
+	public Integer getNumero() {
+		return numero;
+	}
+
+	public void setNumero(Integer numero) {
+		this.numero = numero;
+	}
+
+	
 	
 
 }

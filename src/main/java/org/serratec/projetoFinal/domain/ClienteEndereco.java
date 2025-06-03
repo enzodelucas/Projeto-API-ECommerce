@@ -23,11 +23,17 @@ public class ClienteEndereco {
 	@JsonBackReference("endereco-cliente")
 	private Endereco endereco;
 	
+	private String complemento;
+	
+	private Integer numero;
+	
 	ClienteEndereco() {}
 	
-	public ClienteEndereco(Cliente cliente,Endereco endereco) {
+	public ClienteEndereco(Cliente cliente,Endereco endereco, String complemento, Integer numero) {
 		this.cliente = cliente;
 		this.endereco = endereco;
+		this.complemento = complemento;
+		this.numero = numero;
 	}
 
 	public Long getId() {
@@ -53,5 +59,23 @@ public class ClienteEndereco {
 	public void setEndereco(Endereco endereco) {
 		this.endereco = endereco;
 	}
+
+	public String getComplemento() {
+		return complemento;
+	}
+
+	public void setComplemento(String complemento) {
+		this.complemento = complemento;
+	}
+
+	public Integer getNumero() {
+		return numero;
+	}
+
+	public void setNumero(Integer numero) {
+		this.numero = numero;
+	}
+	
+	
 
 }

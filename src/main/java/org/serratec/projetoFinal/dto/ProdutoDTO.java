@@ -13,6 +13,8 @@ public class ProdutoDTO {
 	private Double valor;
 
 	private String descricao;
+	
+	private Integer estoque;
 
 	public ProdutoDTO(Produto produto) {
 		this.id = produto.getId();
@@ -20,7 +22,22 @@ public class ProdutoDTO {
 		this.valor = produto.getValor();
 		this.categoria = produto.getCategoria().getNome();
 		this.descricao = produto.getDescricao();
+		this.estoque = produto.getEstoque();
 	}
+
+	
+	
+	public Integer getEstoque() {
+		return estoque;
+	}
+
+
+
+	public void setEstoque(Integer estoque) {
+		this.estoque = estoque;
+	}
+
+
 
 	public Long getId() {
 		return id;

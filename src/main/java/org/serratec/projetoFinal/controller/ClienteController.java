@@ -6,6 +6,7 @@ import java.util.List;
 import org.serratec.projetoFinal.dto.ClienteAtualizarDTO;
 import org.serratec.projetoFinal.dto.ClienteDTO;
 import org.serratec.projetoFinal.dto.ClienteInserirDTO;
+import org.serratec.projetoFinal.dto.EnderecoAtualizarDTO;
 import org.serratec.projetoFinal.dto.EnderecoClienteDTO;
 import org.serratec.projetoFinal.dto.EnderecoInserirDTO;
 import org.serratec.projetoFinal.dto.PedidoDTO;
@@ -111,6 +112,12 @@ public class ClienteController {
 		PedidoDTO pedidoDTO = clienteService.listarPedidosId(id);
 		return ResponseEntity.ok(pedidoDTO);
 		
+	}
+	
+	@PutMapping("atualizarEndereco/me")
+	public ResponseEntity<EnderecoClienteDTO> atualizarEndereco(@RequestBody EnderecoAtualizarDTO endAtuDTO){
+		EnderecoClienteDTO endAtualizadoDTO = clienteService.atualizarEnd(endAtuDTO);
+		return ResponseEntity.ok(endAtualizadoDTO);
 	}
 	
 	

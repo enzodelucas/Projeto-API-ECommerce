@@ -30,6 +30,8 @@ public class Produto {
 	@ManyToOne
 	@JoinColumn(name = "id_categoria")
 	private Categoria categoria;
+	
+	private Integer estoque;
 
 	private Double valor;
 
@@ -42,7 +44,18 @@ public class Produto {
 		this.nome = produtoIns.getNome();
 		this.valor = produtoIns.getValor();
 		this.descricao = produtoIns.getDescricao();
+		this.estoque = produtoIns.getEstoque();
 		
+	}
+	
+	
+
+	public Integer getEstoque() {
+		return estoque;
+	}
+
+	public void setEstoque(Integer estoque) {
+		this.estoque = estoque;
 	}
 
 	public Long getId() {

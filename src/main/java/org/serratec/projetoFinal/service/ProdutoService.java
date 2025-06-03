@@ -8,7 +8,10 @@ import java.util.Optional;
 
 import org.serratec.projetoFinal.domain.Categoria;
 import org.serratec.projetoFinal.domain.Produto;
+import org.serratec.projetoFinal.domain.ProdutoPedido;
+import org.serratec.projetoFinal.dto.PedidoInserirDTO;
 import org.serratec.projetoFinal.dto.ProdutoDTO;
+import org.serratec.projetoFinal.dto.ProdutoInserir;
 import org.serratec.projetoFinal.dto.ProdutoInserirDTO;
 import org.serratec.projetoFinal.exception.CategoriaException;
 import org.serratec.projetoFinal.exception.NaoEncontradoException;
@@ -79,6 +82,21 @@ public class ProdutoService {
 		}
 		
 		throw new NaoEncontradoException("produto não foi encontrado");
-
+	}
+	
+	public boolean verificarEstoque(PedidoInserirDTO pedidoIns) {
+		List<ProdutoInserir> produtos = pedidoIns.getProduto();
+		for(ProdutoInserir produtoIns : pedidoIns.getProduto()) {
+			Long idProduto = produtoIns.getId();
+			Integer quantProduto = produtoIns.getQuantidade();
+			Optional<Produto> produtoOpt = produtoRepository.findById(idProduto);
+			if(produtoOpt.isPresent()) {
+				Produto produto = produtoOpt.get();
+				if(produto.getEstoque()>quantProduto) {
+					return true;
+				}
+			}
+		}
+		return false;
 	}
 }

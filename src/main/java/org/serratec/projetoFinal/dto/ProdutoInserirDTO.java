@@ -21,8 +21,19 @@ public class ProdutoInserirDTO {
 	@Size(max = 50, message = "O nome da categoria não pode passar de {max} caracteres.")
 	private String categoria;
 	
+	@NotNull(message = "A quantidade do produto não pode ser vazio.")
+	private Integer estoque;
 
 	
+	
+	public Integer getEstoque() {
+		return estoque;
+	}
+
+	public void setEstoque(Integer estoque) {
+		this.estoque = estoque;
+	}
+
 	public String getCategoria() {
 		return categoria;
 	}

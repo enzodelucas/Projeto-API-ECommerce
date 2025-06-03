@@ -12,6 +12,7 @@ import org.serratec.projetoFinal.domain.Pedido;
 import org.serratec.projetoFinal.dto.ClienteAtualizarDTO;
 import org.serratec.projetoFinal.dto.ClienteDTO;
 import org.serratec.projetoFinal.dto.ClienteInserirDTO;
+import org.serratec.projetoFinal.dto.EnderecoAtualizarDTO;
 import org.serratec.projetoFinal.dto.EnderecoClienteDTO;
 import org.serratec.projetoFinal.dto.EnderecoInserirDTO;
 import org.serratec.projetoFinal.dto.PedidoDTO;
@@ -53,6 +54,7 @@ public class ClienteService {
 
 	@Autowired
 	BCryptPasswordEncoder encoder;
+	
 
 
 
@@ -117,8 +119,11 @@ public class ClienteService {
 	public EnderecoClienteDTO inserirEndereco (EnderecoInserirDTO enderecoIns) { // por autenticação
 		Cliente cliente = autenticacaoService.clienteAutenticacao();
 		Endereco endereco = enderecoService.buscarInserir(enderecoIns.getCep());
+		String complemento = enderecoIns.getComplemento();
+		Integer numero = enderecoIns.getNumero();
+		
 
-		ClienteEndereco clienteE = new ClienteEndereco(cliente, endereco);
+		ClienteEndereco clienteE = new ClienteEndereco(cliente, endereco, complemento, numero);
 
 		clienteEnderecoRepository.save(clienteE);
 
@@ -191,5 +196,12 @@ public class ClienteService {
 		}
 	}
 	
+	public EnderecoClienteDTO atualizarEnd(EnderecoAtualizarDTO endAtuDTO) {
+		Cliente cliente = autenticacaoService.clienteAutenticacao();
+		ClienteEndereco endereco = enderecoService.atualizarEndereco(endAtuDTO, cliente);
+	
+		EnderecoClienteDTO endAtu = new EnderecoClienteDTO(endereco);
+		return endAtu;
+	}
 
 }

@@ -81,7 +81,8 @@ public class WebSecurityConfig {
                 .requestMatchers(HttpMethod.POST, "/clientes/inserirPedido/me").hasRole("CLIENTE")
                 .requestMatchers(HttpMethod.GET, "/login/historico").permitAll()
                 .requestMatchers(HttpMethod.GET, "/clientes/me/listarPedidoId/{id}").hasRole("CLIENTE")
-                
+                .requestMatchers(HttpMethod.PUT, "/clientes/atualizarEndereco/me").hasRole("CLIENTE")
+                .requestMatchers(HttpMethod.GET, "/funcionarios/listarPedidos").hasRole("FUNCIONARIO")
                 .requestMatchers("/h2-console/**").permitAll()
                 
                 //mudar permissôes depois
