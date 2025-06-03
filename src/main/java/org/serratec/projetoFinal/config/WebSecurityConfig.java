@@ -88,6 +88,8 @@ public class WebSecurityConfig {
                 .requestMatchers(HttpMethod.PUT, "/funcionarios/editarStatusPedido/{id}").hasRole("FUNCIONARIO")
                 .requestMatchers(HttpMethod.GET, "/funcionarios/listarCliente/{id}").hasRole("FUNCIONARIO")
                 .requestMatchers(HttpMethod.GET, "/funcionarios/pedidos/excel").hasRole("FUNCIONARIO")
+                .requestMatchers(HttpMethod.GET, "/produtos/buscarPorValor").permitAll()
+                .requestMatchers(HttpMethod.GET, "/produtos/buscarPorNome").permitAll()
                 
                
                 .requestMatchers("/h2-console/**").permitAll()

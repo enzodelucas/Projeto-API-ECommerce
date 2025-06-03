@@ -19,6 +19,7 @@ import org.serratec.projetoFinal.repository.CategoriaRepository;
 import org.serratec.projetoFinal.repository.ClienteRepository;
 import org.serratec.projetoFinal.repository.ProdutoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
@@ -98,5 +99,30 @@ public class ProdutoService {
 			}
 		}
 		return false;
+	}
+	
+	public Page<ProdutoDTO> listarProdutoPaginado(Pageable pageable) {
+		return produtoRepository.findAll(pageable).map(p -> new ProdutoDTO(p));
+	}
+
+	
+	public List<ProdutoDTO> listarPorValor(Double valorMinimo, Double valorMaximo) {
+		List<Produto> produtos = produtoRepository.findByValorBetween(valorMinimo, valorMaximo);
+		List<ProdutoDTO> produtosDTO = new ArrayList<>();
+		for (Produto produto : produtos) {
+			ProdutoDTO produtoDTO = new ProdutoDTO(produto);
+			produtosDTO.add(produtoDTO);
+		}
+		return produtosDTO;
+	}
+	
+	public List<ProdutoDTO> listarPorNome(String nome) {
+		List<Produto> produtos = produtoRepository.findByNomeContainingIgnoreCase(nome);
+		List<ProdutoDTO> produtosDTO = new ArrayList<>();
+		for (Produto produto : produtos) {
+			ProdutoDTO produtoDTO = new ProdutoDTO(produto);
+			produtosDTO.add(produtoDTO);
+		}
+		return produtosDTO;
 	}
 }
