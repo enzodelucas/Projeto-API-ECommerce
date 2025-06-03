@@ -33,7 +33,7 @@ public class OpenAPIConfig {
 		
 		Contact contact = new Contact();
 		contact.setEmail("lojagrupo03@gmail.com");
-		contact.setName("Serratec");
+		contact.setName("Grupo 03");
 		contact.setUrl("https://www.meudominio.com.br");
 		
 		License apachaLicense = new License().name("Apache License").url("https://www.apache.org/licenses/LICENSE/2.0");

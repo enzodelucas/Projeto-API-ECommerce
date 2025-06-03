@@ -79,13 +79,6 @@ public class Funcionario extends Usuario {
 	public void setCargo(String cargo) {
 		this.cargo = cargo;
 	}
-
-
-	@Override //mudar depois
-	public String toString() {
-		return "Funcionario [id=" + id + ", nome=" + nome + ", telefone=" + telefone + ", cpf=" + cpf + ", cargo="
-				+ cargo + "]";
-	}
 	
 	
 }

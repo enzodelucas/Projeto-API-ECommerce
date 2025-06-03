@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/usuarios")
@@ -32,7 +33,7 @@ public class UsuarioController {
 			@ApiResponse(responseCode = "404", description = "Recurso não encontrado"),
 			@ApiResponse(responseCode = "505", description = "Exceção interna da aplicação") 
 			} ) 
-	public ResponseEntity<String> solicitarRecuperacao(@RequestBody SolicitarRecuperacaoSenhaDTO solicitacao){
+	public ResponseEntity<String> solicitarRecuperacao(@Valid @RequestBody SolicitarRecuperacaoSenhaDTO solicitacao){
 		usuarioService.solicitarRecuperacao(solicitacao);
 		return ResponseEntity.ok("Código de recuperação enviado por e-mail");
 	}
@@ -48,7 +49,7 @@ public class UsuarioController {
 			@ApiResponse(responseCode = "404", description = "Recurso não encontrado"),
 			@ApiResponse(responseCode = "505", description = "Exceção interna da aplicação") 
 			} ) 
-	public ResponseEntity<String> redifinirSenha(@RequestBody RedefinirSenhaDTO redefinirSenha){
+	public ResponseEntity<String> redefinirSenha(@Valid @RequestBody RedefinirSenhaDTO redefinirSenha){
 		usuarioService.resetarSenha(redefinirSenha);
 		return ResponseEntity.ok("Senha redifinida com sucesso.");
 	}

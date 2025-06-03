@@ -28,35 +28,6 @@ public class EnderecoService {
 	@Autowired
 	AutenticacaoService autenticacaoService;
 
-	/*public EnderecoDTO buscarInserirDTO(String cep) {
-		Optional<Endereco> enderecoOpt = enderecoRepository.findByCep(cep);
-		if (enderecoOpt.isPresent()) {
-			EnderecoDTO enderecoDTO = new EnderecoDTO(enderecoOpt.get());
-			return enderecoDTO;
-		} else {
-			RestTemplate restTemplate = new RestTemplate();
-			String url = "http://viacep.com.br/ws/" + cep + "/json/";
-			Optional<Endereco> enderecoViaCepOpt = Optional.ofNullable(restTemplate.getForObject(url, Endereco.class));
-			if (enderecoViaCepOpt.isPresent() && enderecoViaCepOpt.get().getCep() != null) {
-				Endereco enderecoViaCep = enderecoViaCepOpt.get();
-				String cepSemTraco = enderecoViaCep.getCep().replaceAll("-", "");
-				enderecoViaCep.setCep(cepSemTraco);
-				return inserirDTO(enderecoViaCep);
-			} else {
-				return null;
-			}
-		}
-		
-	}
-	
-	public EnderecoDTO inserirDTO(Endereco endereco) {
-		endereco = enderecoRepository.save(endereco);
-		EnderecoDTO enderecoDto = new EnderecoDTO(endereco);
-		return enderecoDto;
-	}*/
-	//se nao tiver sendo usado, apagar depois
-	
-	
 	
 	public Endereco buscarInserir(String cep) {
 		Optional<Endereco> enderecoOpt = enderecoRepository.findByCep(cep);
@@ -84,14 +55,12 @@ public class EnderecoService {
 		return endereco;
 	}
 	
-	//funcionou porem não ta editando o existente, ta criando outro id a partir desse 
-	//Acho que corrigir, confirmar depois
 	public ClienteEndereco atualizarEndereco(EnderecoAtualizarDTO endAtuDTO, Cliente cliente) {
 		Long idCliente = cliente.getId();
 		Optional<ClienteEndereco> endeClienteOpt = clienteEnderecoRepository.findFirstByClienteId(idCliente);
 		if(endeClienteOpt.isPresent()) {
 			ClienteEndereco ce = endeClienteOpt.get();
-			ce.setId(ce.getId()); // tentando corrigir o erro do id
+			ce.setId(ce.getId()); 
 			ce.setComplemento(endAtuDTO.getComplemento());
 			ce.setNumero(endAtuDTO.getNumero());
 			clienteEnderecoRepository.save(ce);		

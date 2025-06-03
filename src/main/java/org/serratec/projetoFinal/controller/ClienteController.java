@@ -134,7 +134,7 @@ public class ClienteController {
 		URI uri = ServletUriComponentsBuilder
 				.fromCurrentRequest()
 				.path("{id}")
-				.buildAndExpand(endereco.getId()) //teste
+				.buildAndExpand(endereco.getId()) 
 				.toUri();
 		
 		

@@ -47,11 +47,9 @@ public class FuncionarioService {
 
 		Funcionario funcionario = new Funcionario(funcionarioIns);
 		
-		funcionario.setSenha(encoder.encode(funcionarioIns.getSenha())); //teste
+		funcionario.setSenha(encoder.encode(funcionarioIns.getSenha())); 
 		
 		funcionario = funcionarioRepository.save(funcionario);
-		
-		//mailConfig.(funcionario.getEmail(), "Cadastro de Cliente", funcionario.toString());
 		
 		FuncionarioDTO funcionarioDTO = new FuncionarioDTO(funcionario);
 		
