@@ -93,7 +93,7 @@ public class WebSecurityConfig {
                 
                
                 .requestMatchers("/h2-console/**").permitAll()
-                .requestMatchers("/swagger-ui/**").permitAll() //teste
+                .requestMatchers("/swagger-ui/**", "/v3/api-docs/**","/swagger-ui.html").permitAll() //teste
                 
                 //mudar permissôes depois
                 
