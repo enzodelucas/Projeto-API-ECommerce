@@ -82,6 +82,7 @@ public class WebSecurityConfig {
 		.requestMatchers(HttpMethod.PUT, "/funcionarios/editarStatusPedido/{id}").hasRole("FUNCIONARIO")
 		.requestMatchers(HttpMethod.GET, "/funcionarios/listarCliente/{id}").hasRole("FUNCIONARIO")
 		.requestMatchers(HttpMethod.GET, "/funcionarios/pedidos/excel").hasRole("FUNCIONARIO")
+		.requestMatchers(HttpMethod.DELETE, "/produtos/deletar/{id}").hasRole("FUNCIONARIO")
 		
 		.requestMatchers(HttpMethod.GET, "/clientes/verMeusDados/me").hasRole("CLIENTE")
 		.requestMatchers(HttpMethod.DELETE, "/clientes/deletarConta/me").hasRole("CLIENTE")

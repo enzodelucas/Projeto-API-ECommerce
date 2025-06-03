@@ -1,7 +1,5 @@
 package org.serratec.projetoFinal.service;
 
-
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -26,7 +24,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class ProdutoService {
 
-    private final ClienteRepository clienteRepository;
+	private final ClienteRepository clienteRepository;
 
 	@Autowired
 	ProdutoRepository produtoRepository;
@@ -34,9 +32,9 @@ public class ProdutoService {
 	@Autowired
 	CategoriaRepository categoriaRepository;
 
-    ProdutoService(ClienteRepository clienteRepository) {
-        this.clienteRepository = clienteRepository;
-    }
+	ProdutoService(ClienteRepository clienteRepository) {
+		this.clienteRepository = clienteRepository;
+	}
 
 	public ProdutoDTO inserir(ProdutoInserirDTO produtoIns) throws CategoriaException {
 		Categoria categoria = categoriaRepository.findByNomeIgnoreCase(produtoIns.getCategoria());
@@ -62,8 +60,8 @@ public class ProdutoService {
 		}
 		return produtoDTO;
 	}
-	
-	public ProdutoDTO editar(Long id, ProdutoInserirDTO produtoIns) throws CategoriaException, NaoEncontradoException{
+
+	public ProdutoDTO editar(Long id, ProdutoInserirDTO produtoIns) throws CategoriaException, NaoEncontradoException {
 		Optional<Produto> produtoOpt = produtoRepository.findById(id);
 		if (produtoOpt.isPresent()) {
 			Produto p = produtoOpt.get();
@@ -77,35 +75,34 @@ public class ProdutoService {
 			p.setCategoria(categoria);
 			p.setValor(produtoIns.getValor());
 			produtoRepository.save(p);
-			
+
 			ProdutoDTO produtoDTO = new ProdutoDTO(p);
 			return produtoDTO;
 		}
-		
+
 		throw new NaoEncontradoException("produto não foi encontrado");
 	}
-	
+
 	public boolean verificarEstoque(PedidoInserirDTO pedidoIns) {
 		List<ProdutoInserir> produtos = pedidoIns.getProduto();
-		for(ProdutoInserir produtoIns : pedidoIns.getProduto()) {
+		for (ProdutoInserir produtoIns : pedidoIns.getProduto()) {
 			Long idProduto = produtoIns.getId();
 			Integer quantProduto = produtoIns.getQuantidade();
 			Optional<Produto> produtoOpt = produtoRepository.findById(idProduto);
-			if(produtoOpt.isPresent()) {
+			if (produtoOpt.isPresent()) {
 				Produto produto = produtoOpt.get();
-				if(produto.getEstoque()>quantProduto) {
+				if (produto.getEstoque() > quantProduto) {
 					return true;
 				}
 			}
 		}
 		return false;
 	}
-	
+
 	public Page<ProdutoDTO> listarProdutoPaginado(Pageable pageable) {
 		return produtoRepository.findAll(pageable).map(p -> new ProdutoDTO(p));
 	}
 
-	
 	public List<ProdutoDTO> listarPorValor(Double valorMinimo, Double valorMaximo) {
 		List<Produto> produtos = produtoRepository.findByValorBetween(valorMinimo, valorMaximo);
 		List<ProdutoDTO> produtosDTO = new ArrayList<>();
@@ -115,7 +112,7 @@ public class ProdutoService {
 		}
 		return produtosDTO;
 	}
-	
+
 	public List<ProdutoDTO> listarPorNome(String nome) {
 		List<Produto> produtos = produtoRepository.findByNomeContainingIgnoreCase(nome);
 		List<ProdutoDTO> produtosDTO = new ArrayList<>();
@@ -124,5 +121,14 @@ public class ProdutoService {
 			produtosDTO.add(produtoDTO);
 		}
 		return produtosDTO;
+	}
+
+	public void deletar(Long id) {
+		Optional<Produto> produtoOpt = produtoRepository.findById(id);
+		if (produtoOpt.isPresent()) {
+			produtoRepository.deleteById(id);
+		} else {
+			throw new NaoEncontradoException("Produto não encontrado.");
+		}
 	}
 }

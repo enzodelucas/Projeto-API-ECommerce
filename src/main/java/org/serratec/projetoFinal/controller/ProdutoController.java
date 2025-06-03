@@ -15,6 +15,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -142,6 +143,23 @@ public class ProdutoController {
 	public ResponseEntity<List<ProdutoDTO>> buscarPorNome(@RequestParam String nome){
 		List<ProdutoDTO> produtos = produtoService.listarPorNome(nome);
 		return ResponseEntity.ok(produtos);
+	}
+	
+	
+	@Operation(summary = "deleta um produto", 
+		    description = "A resposta deleta um produto por id")
+		    @ApiResponses(value = {
+		            @ApiResponse(responseCode = "200",
+		            description = "Retorna sem conteúdo"),
+		            @ApiResponse(responseCode = "401", description = "Erro de autenticação"),
+		            @ApiResponse(responseCode = "403", description = "Não há permissão para acessar o recurso"),
+		            @ApiResponse(responseCode = "404", description = "Recurso não encontrado"),
+		            @ApiResponse(responseCode = "505", description = "Exceção interna da aplicação") 
+		        })
+	@DeleteMapping("/deletar/{id}")
+	public ResponseEntity<Void> deletar(@PathVariable Long id) {
+		produtoService.deletar(id);
+		return ResponseEntity.noContent().build();
 	}
 	
 }

@@ -38,7 +38,7 @@ public class UsuarioController {
 		return ResponseEntity.ok("Código de recuperação enviado por e-mail");
 	}
 	
-	@PostMapping("/redifinirSenha")
+	@PostMapping("/redefinirSenha")
 	@Operation(summary = "Redefine a senha", 
 	description = "A resposta exibe uma mensagem")
 @ApiResponses(value = {
@@ -51,6 +51,6 @@ public class UsuarioController {
 			} ) 
 	public ResponseEntity<String> redefinirSenha(@Valid @RequestBody RedefinirSenhaDTO redefinirSenha){
 		usuarioService.resetarSenha(redefinirSenha);
-		return ResponseEntity.ok("Senha redifinida com sucesso.");
+		return ResponseEntity.ok("Senha redefinida com sucesso.");
 	}
 }

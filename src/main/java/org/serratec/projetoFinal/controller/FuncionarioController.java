@@ -96,8 +96,8 @@ public class FuncionarioController {
 	@Operation(summary = "deleta um funcionario", 
 	description = "A resposta deleta um fucnionario por id")
 	@ApiResponses(value = {
-			@ApiResponse(responseCode = "200",
-			description = "Retorna ok"),
+			@ApiResponse(responseCode = "201",
+			description = "Retorna sem conteúdo"),
 			@ApiResponse(responseCode = "401", description = "Erro de autenticação"),
 			@ApiResponse(responseCode = "403", description = "Não há permissão para acessar o recurso"),
 			@ApiResponse(responseCode = "404", description = "Recurso não encontrado"),
