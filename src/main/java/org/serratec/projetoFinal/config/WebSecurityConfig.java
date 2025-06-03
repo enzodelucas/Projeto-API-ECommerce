@@ -83,6 +83,12 @@ public class WebSecurityConfig {
                 .requestMatchers(HttpMethod.GET, "/clientes/me/listarPedidoId/{id}").hasRole("CLIENTE")
                 .requestMatchers(HttpMethod.PUT, "/clientes/atualizarEndereco/me").hasRole("CLIENTE")
                 .requestMatchers(HttpMethod.GET, "/funcionarios/listarPedidos").hasRole("FUNCIONARIO")
+                .requestMatchers(HttpMethod.POST, "/clientes/me/cancelarPedido/{id}").hasRole("CLIENTE")
+                .requestMatchers(HttpMethod.POST, "/clientes/me/marcarPedidoEntregue/{id}").hasRole("CLIENTE")
+                .requestMatchers(HttpMethod.PUT, "/funcionarios/editarStatusPedido/{id}").hasRole("FUNCIONARIO")
+                .requestMatchers(HttpMethod.GET, "/funcionarios/listarCliente/{id}").hasRole("FUNCIONARIO")
+                
+               
                 .requestMatchers("/h2-console/**").permitAll()
                 
                 //mudar permissôes depois

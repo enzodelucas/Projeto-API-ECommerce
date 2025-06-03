@@ -9,6 +9,13 @@ import org.serratec.projetoFinal.domain.ProdutoPedido;
 import org.serratec.projetoFinal.enuns.FormaPgto;
 import org.serratec.projetoFinal.enuns.Status;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+
+@JsonPropertyOrder({
+    "id", "dataPedido", "emailCliente", "cepCliente",
+    "produtos", "valorFinal", "desconto", "formaPgto", "status"
+}) // anotação para sempre que conventer para json, aparecer assim
 public class PedidoDTO {
 
 	private Long id;
@@ -17,6 +24,7 @@ public class PedidoDTO {
 	
 	private String cepCliente;
 	
+	@JsonFormat(pattern = "dd-MM-yyyy")
 	private LocalDate dataPedido;
 	
 	private Double valorFinal;
@@ -27,18 +35,20 @@ public class PedidoDTO {
 	
 	private Double desconto;
 	
-	private List<ProdutoPedido> produtos = new ArrayList<>();
+	private List<ProdutoPedidoDTO> produtos = new ArrayList<>();
 
 	public PedidoDTO(Pedido pedido) {
-		this.id = pedido.getId();
-		this.emailCliente = pedido.getCliente().getEmail();
-		this.cepCliente = pedido.getEnderecoEntrega().getEndereco().getCep();
-		this.dataPedido = pedido.getDataPedido();
-		this.valorFinal = pedido.getValorFinal();
-		this.formaPgto = pedido.getFormaPgto();
-		this.status = pedido.getStatus();
-		this.produtos = pedido.getProdutos();
-		this.desconto = pedido.getDesconto();
+	    this.id = pedido.getId();
+	    this.status = pedido.getStatus();
+	    this.emailCliente = pedido.getCliente().getEmail();
+	    this.cepCliente = pedido.getEnderecoEntrega().getEndereco().getCep();
+	    this.dataPedido = pedido.getDataPedido();
+	    this.formaPgto = pedido.getFormaPgto();
+	    this.desconto = pedido.getDesconto();
+	    this.valorFinal = pedido.getValorFinal(); 
+	    for (ProdutoPedido p : pedido.getProdutos()) {
+	        this.produtos.add(new ProdutoPedidoDTO(p));
+	    }
 	}
 
 	public Long getId() {
@@ -97,20 +107,20 @@ public class PedidoDTO {
 		this.status = status;
 	}
 
-	public List<ProdutoPedido> getProdutos() {
-		return produtos;
-	}
-
-	public void setProdutos(List<ProdutoPedido> produtos) {
-		this.produtos = produtos;
-	}
-
 	public Double getDesconto() {
 		return desconto;
 	}
 
 	public void setDesconto(Double desconto) {
 		this.desconto = desconto;
+	}
+
+	public List<ProdutoPedidoDTO> getProdutos() {
+		return produtos;
+	}
+
+	public void setProdutos(List<ProdutoPedidoDTO> produtos) {
+		this.produtos = produtos;
 	}
 	
 	

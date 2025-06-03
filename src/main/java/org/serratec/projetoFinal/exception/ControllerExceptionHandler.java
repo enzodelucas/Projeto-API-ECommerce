@@ -42,7 +42,8 @@ public class ControllerExceptionHandler extends ResponseEntityExceptionHandler {
 return super.handleExceptionInternal(ex, erroResposta, headers, status, request);
 	}
 	
-	@ExceptionHandler({EmailException.class, SenhaException.class, CpfException.class, CategoriaException.class, UsuarioNaoPermitidoException.class})
+	@ExceptionHandler({EmailException.class, SenhaException.class, CpfException.class, CategoriaException.class, UsuarioNaoPermitidoException.class
+		,CodigoExpiradoException.class, PedidoNaoPodeSerAlteradoException.class})
 	protected ResponseEntity<Object> handleException(RuntimeException ex){
 		return ResponseEntity.unprocessableEntity().body(ex.getMessage());
 	}

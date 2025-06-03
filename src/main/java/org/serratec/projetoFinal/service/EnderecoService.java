@@ -28,7 +28,7 @@ public class EnderecoService {
 	
 	
 
-	public EnderecoDTO buscarInserirDTO(String cep) {
+	/*public EnderecoDTO buscarInserirDTO(String cep) {
 		Optional<Endereco> enderecoOpt = enderecoRepository.findByCep(cep);
 		if (enderecoOpt.isPresent()) {
 			EnderecoDTO enderecoDTO = new EnderecoDTO(enderecoOpt.get());
@@ -53,7 +53,8 @@ public class EnderecoService {
 		endereco = enderecoRepository.save(endereco);
 		EnderecoDTO enderecoDto = new EnderecoDTO(endereco);
 		return enderecoDto;
-	}
+	}*/
+	//se nao tiver sendo usado, apagar depois
 	
 	
 	
@@ -83,12 +84,14 @@ public class EnderecoService {
 		return endereco;
 	}
 	
-	//funcionou porem não ta editando o existente, ta criando outro id a partir desse
+	//funcionou porem não ta editando o existente, ta criando outro id a partir desse 
+	//Acho que corrigir, confirmar depois
 	public ClienteEndereco atualizarEndereco(EnderecoAtualizarDTO endAtuDTO, Cliente cliente) {
 		Long idCliente = cliente.getId();
 		Optional<ClienteEndereco> endeClienteOpt = clienteEnderecoRepository.findFirstByClienteId(idCliente);
 		if(endeClienteOpt.isPresent()) {
 			ClienteEndereco ce = endeClienteOpt.get();
+			ce.setId(ce.getId()); // tentando corrigir o erro do id
 			ce.setComplemento(endAtuDTO.getComplemento());
 			ce.setNumero(endAtuDTO.getNumero());
 			clienteEnderecoRepository.save(ce);		

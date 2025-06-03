@@ -3,11 +3,12 @@ package org.serratec.projetoFinal.controller;
 import java.net.URI;
 import java.util.List;
 
-
+import org.serratec.projetoFinal.dto.ClienteDTO;
 import org.serratec.projetoFinal.dto.FuncionarioDTO;
 import org.serratec.projetoFinal.dto.FuncionarioInserirDTO;
+import org.serratec.projetoFinal.dto.PedidoAtualizarStatusDTO;
 import org.serratec.projetoFinal.dto.PedidoDTO;
-import org.serratec.projetoFinal.dto.ProdutoDTO;
+import org.serratec.projetoFinal.service.ClienteService;
 import org.serratec.projetoFinal.service.FuncionarioService;
 import org.serratec.projetoFinal.service.PedidoService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -33,6 +35,8 @@ public class FuncionarioController {
 	@Autowired
 	PedidoService pedidoService;
 	
+	@Autowired
+	ClienteService clienteService;
 
 	@PostMapping("/inserirFuncionario")
 	public ResponseEntity<FuncionarioDTO> inserirFuncionario(@Valid @RequestBody FuncionarioInserirDTO funcionarioIns) {
@@ -58,5 +62,16 @@ public class FuncionarioController {
 		return ResponseEntity.ok(pedidoService.listaTodosPedidos());
 	}
 	
+	@PutMapping("/editarStatusPedido/{id}")
+	public ResponseEntity<PedidoDTO> editarStatus(@PathVariable Long id, @Valid @RequestBody PedidoAtualizarStatusDTO pedidoatt){
+		PedidoDTO pedidoDTO = pedidoService.atualizarStatusPedido(id, pedidoatt);
+		return ResponseEntity.ok(pedidoDTO);
+	}
+	
+	@GetMapping("listarCliente/{id}")
+	public  ResponseEntity<ClienteDTO> listarCliente(@PathVariable Long id){
+		ClienteDTO clienteDTO = clienteService.listarId(id);
+		return ResponseEntity.ok(clienteDTO);
+	}
 	
 }

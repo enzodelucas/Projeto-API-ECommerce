@@ -21,7 +21,7 @@ public class ClienteDTO {
 
 	private String cpf;
 	
-	private List<Endereco> enderecos;
+	 private List<EnderecoClienteDTO> enderecos;
 	
 	private List<Pedido> pedidos;
 
@@ -34,10 +34,9 @@ public class ClienteDTO {
 		this.cpf = cliente.getCpf();
 		this.pedidos = cliente.getPedidos(); // teste
 		this.enderecos = new ArrayList<>();
-		for (ClienteEndereco clienteEndereco : cliente.getEnderecos())
-		{ 
-			this.enderecos.add(clienteEndereco.getEndereco()); //teste
-		}
+		for (ClienteEndereco clienteEndereco : cliente.getEnderecos()) {
+            this.enderecos.add(new EnderecoClienteDTO(clienteEndereco)); 
+        }
 	}
 
 
@@ -101,12 +100,12 @@ public class ClienteDTO {
 	}
 
 
-	public List<Endereco> getEnderecos() {
+	public List<EnderecoClienteDTO> getEnderecos() {
 		return enderecos;
 	}
 
 
-	public void setEnderecos(List<Endereco> enderecos) {
+	public void setEnderecos(List<EnderecoClienteDTO> enderecos) {
 		this.enderecos = enderecos;
 	}
 	

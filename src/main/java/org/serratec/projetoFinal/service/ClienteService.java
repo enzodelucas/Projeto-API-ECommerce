@@ -94,16 +94,6 @@ public class ClienteService {
 		return clienteDTO;
 	}
 
-	//teste, favor corrigir depois
-	/*public ClienteDTO listarId(Long id) {
-		 Optional<Cliente> nome = clienteRepository.findById(id);
-		 if(nome.isPresent()) {
-			 Cliente cliente = nome.get();
-			 ClienteDTO clienteDTO = new ClienteDTO(cliente);
-			 return clienteDTO;
-		 }
-		 return null;
-	}*/
 
 	public ClienteDTO buscarDados() { // por autenticação
 		Cliente cliente= autenticacaoService.clienteAutenticacao();
@@ -183,18 +173,6 @@ public class ClienteService {
 		}
 	}
 	
-	public PedidoDTO listarPedidosId(Long id) {
-		Cliente cliente = autenticacaoService.clienteAutenticacao();
-		List<Pedido> pedidos = cliente.getPedidos();
-		Optional<Pedido> pedidosOpt = pedidoRepository.findById(id);
-		if(pedidosOpt.isPresent()) {
-			Pedido pedidoId = pedidosOpt.get();
-			PedidoDTO pedidoDTO = new PedidoDTO(pedidoId);
-			return pedidoDTO;
-		}else {
-			throw new NaoEncontradoException("Pedido não encontrado");
-		}
-	}
 	
 	public EnderecoClienteDTO atualizarEnd(EnderecoAtualizarDTO endAtuDTO) {
 		Cliente cliente = autenticacaoService.clienteAutenticacao();
@@ -204,4 +182,13 @@ public class ClienteService {
 		return endAtu;
 	}
 
+	public ClienteDTO listarId(Long id) { //para o funcionario
+		 Optional<Cliente> nome = clienteRepository.findById(id);
+		 if(nome.isPresent()) {
+			 Cliente cliente = nome.get();
+			 ClienteDTO clienteDTO = new ClienteDTO(cliente);
+			 return clienteDTO;
+		 }
+		 throw new NaoEncontradoException("Cliente não encontrado.");
+	}
 }

@@ -8,6 +8,7 @@ import org.serratec.projetoFinal.enuns.FormaPgto;
 import org.serratec.projetoFinal.enuns.Status;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;

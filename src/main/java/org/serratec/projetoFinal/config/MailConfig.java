@@ -7,42 +7,87 @@ import org.springframework.mail.javamail.JavaMailSender;
 
 @Configuration
 public class MailConfig {
-	
+
 	@Autowired
 	private JavaMailSender javaMailSender;
-	
+
 	public void sendEmail(String para, String assunto, String texto) {
 		SimpleMailMessage message = new SimpleMailMessage();
 		message.setFrom("lojagrupo03@gmail.com");
 		message.setTo(para);
 		message.setSubject(assunto);
-		message.setText("Dados: \n" + texto + "\n\nE-COMMERCE GRUPO 03.");
+		
+		String textoE = """
+				Dados:
+				
+				%s
+				
+				Atenciosamente,
+				Equipe E-Commerce Grupo 03
+				""".formatted(texto);
+		
+		message.setText(textoE);
 		javaMailSender.send(message);
 	}
-	
+
 	public void sendEmailAtt(String para, String assunto, String texto) {
-        SimpleMailMessage message = new SimpleMailMessage();
-        message.setFrom("lojagrupo03@gmail.com");
-        message.setTo(para);
-        message.setSubject(assunto);
-        message.setText("Atualização de cadastro concluída com sucesso! \n Novos dados: \n" + texto + "\n\nE-COMMERCE GRUPO 03.");
-        javaMailSender.send(message);
-    }
-	
+		SimpleMailMessage message = new SimpleMailMessage();
+		message.setFrom("lojagrupo03@gmail.com");
+		message.setTo(para);
+		message.setSubject(assunto);
+		String textoE = """
+				Olá!
+				
+				Atualização de cadastro concluída com sucesso!
+				
+				Novos dados:
+				
+				%s
+				
+				Atenciosamente,  
+				Equipe E-Commerce Grupo 03
+				""".formatted(texto);
+		
+		message.setText(textoE);
+		javaMailSender.send(message);
+	}
+
 	public void sendCodigoRecuperacao(String para, String codigo) {
-        SimpleMailMessage message = new SimpleMailMessage();
-        message.setFrom("lojagrupo03@gmail.com");
-        message.setTo(para);
-        message.setSubject("Recuperação de Senha");
-        message.setText("Solicitação de recuperação de senha \nUtilize o código para redefinir sua senha: " + codigo + "\n\nE-COMMERCE GRUPO 03.");
-        javaMailSender.send(message);
-    }
-	
+		SimpleMailMessage message = new SimpleMailMessage();
+		message.setFrom("lojagrupo03@gmail.com");
+		message.setTo(para);
+		message.setSubject("Recuperação de Senha");
+		String texto = """
+				Olá!
+
+				Recebemos uma solicitação para redefinir sua senha.
+
+				Seu código de verificação é: %s
+
+				Atenciosamente,  
+				Equipe E-Commerce Grupo 03
+				""".formatted(codigo);
+
+		message.setText(texto);
+		javaMailSender.send(message);
+	}
+
 	public void sendEmailAttStatus(String para, String assunto, String texto) {
-        SimpleMailMessage message = new SimpleMailMessage();
-        message.setFrom("lojagrupo03@gmail.com");
-        message.setTo(para);
-        message.setSubject(assunto);
-        message.setText("Status do pedido atualizado: \nDados do pedido: \n" + texto + "\n\nE-COMMERCE GRUPO 0");
+	    SimpleMailMessage message = new SimpleMailMessage();
+	    message.setFrom("lojagrupo03@gmail.com");
+	    message.setTo(para);
+	    message.setSubject(assunto);
+	    String textoE = """
+	        Status do pedido atualizado:
+
+	        Dados do pedido:
+	        %s
+
+	        Atenciosamente,
+	        E-COMMERCE GRUPO 03
+	        """.formatted(texto);
+
+	    message.setText(textoE);
+	    javaMailSender.send(message);
 	}
 }

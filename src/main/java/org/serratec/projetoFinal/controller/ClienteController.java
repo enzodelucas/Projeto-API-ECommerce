@@ -41,7 +41,7 @@ public class ClienteController {
 	@Autowired
 	PedidoService pedidoService;
 	
-	@PostMapping
+	@PostMapping //esse é aberto para todos
 	public ResponseEntity<ClienteDTO> inserirCliente(@Valid @RequestBody ClienteInserirDTO clienteIns) {
 		ClienteDTO clienteDTO = clienteService.inserir(clienteIns);
 		URI uri = ServletUriComponentsBuilder
@@ -52,7 +52,7 @@ public class ClienteController {
 		return ResponseEntity.created(uri).body(clienteDTO);
 	}
 	
-	@GetMapping
+	@GetMapping // esse é so para funcionario (mudar daqui para o controller de  funcionario?)
 	public ResponseEntity<List<ClienteDTO>> listarClientes() {
 		return ResponseEntity.ok(clienteService.listar());
 	}
@@ -67,7 +67,12 @@ public class ClienteController {
 		clienteService.deletar();
 		return ResponseEntity.noContent().build();
 	}
-	
+
+	@PutMapping("atualizarDados/me") // deu certo
+	public ResponseEntity<ClienteDTO> atualizarDados(@RequestBody ClienteAtualizarDTO clienteAtt){
+	ClienteDTO cliente = clienteService.atualizar(clienteAtt);
+		return ResponseEntity.ok(cliente);
+	}
 	
 	@PostMapping("/inserirEndereco/me") //deu certo
 	public ResponseEntity<EnderecoClienteDTO> inserirEndereco(@Valid @RequestBody EnderecoInserirDTO enderecoIns) {	
@@ -83,11 +88,10 @@ public class ClienteController {
 		
 	}
 	
-	
-	@PutMapping("atualizarDados/me") // deu certo
-	public ResponseEntity<ClienteDTO> atualizarDados(@RequestBody ClienteAtualizarDTO clienteAtt){
-	ClienteDTO cliente = clienteService.atualizar(clienteAtt);
-		return ResponseEntity.ok(cliente);
+	@PutMapping("atualizarEndereco/me")
+	public ResponseEntity<EnderecoClienteDTO> atualizarEndereco(@RequestBody EnderecoAtualizarDTO endAtuDTO){
+		EnderecoClienteDTO endAtualizadoDTO = clienteService.atualizarEnd(endAtuDTO);
+		return ResponseEntity.ok(endAtualizadoDTO);
 	}
 	
 	@DeleteMapping("/me/deletarEndereco/{id}")
@@ -109,16 +113,24 @@ public class ClienteController {
 	
 	@GetMapping("/me/listarPedidoId/{id}")
 	public ResponseEntity<PedidoDTO> listarPedidoId(@PathVariable Long id){
-		PedidoDTO pedidoDTO = clienteService.listarPedidosId(id);
+		PedidoDTO pedidoDTO = pedidoService.listarPedidosId(id);
 		return ResponseEntity.ok(pedidoDTO);
 		
 	}
 	
-	@PutMapping("atualizarEndereco/me")
-	public ResponseEntity<EnderecoClienteDTO> atualizarEndereco(@RequestBody EnderecoAtualizarDTO endAtuDTO){
-		EnderecoClienteDTO endAtualizadoDTO = clienteService.atualizarEnd(endAtuDTO);
-		return ResponseEntity.ok(endAtualizadoDTO);
+	@PutMapping("/me/cancelarPedido/{id}")
+	public ResponseEntity<PedidoDTO> cancelarPedido(@PathVariable Long id){
+		PedidoDTO pedidoDTO = pedidoService.pedidoCancelado(id);
+		return ResponseEntity.ok(pedidoDTO);
 	}
+	
+	@PutMapping("/me/marcarPedidoEntregue/{id}")
+	public ResponseEntity<PedidoDTO> marcarEntregue(@PathVariable Long id){
+		PedidoDTO pedidoDTO = pedidoService.pedidoEntregue(id);
+		return ResponseEntity.ok(pedidoDTO);
+	}
+	
+	
 	
 	
 }
