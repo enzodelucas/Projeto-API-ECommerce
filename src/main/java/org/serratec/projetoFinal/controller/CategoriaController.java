@@ -26,6 +26,7 @@ public class CategoriaController {
 	@Autowired
 	CategoriaService categoriaService;
 
+	
 	@PostMapping("/inserirCategoria")
 	public ResponseEntity<Categoria> inserirCategoria(@Valid @RequestBody Categoria categoria) {
 		categoriaService.inserir(categoria);
