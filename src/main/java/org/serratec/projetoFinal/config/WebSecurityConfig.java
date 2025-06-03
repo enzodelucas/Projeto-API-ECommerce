@@ -94,7 +94,11 @@ public class WebSecurityConfig {
 		.requestMatchers(HttpMethod.POST, "/clientes/me/cancelarPedido/{id}").hasRole("CLIENTE")
 		.requestMatchers(HttpMethod.POST, "/clientes/me/marcarPedidoEntregue/{id}").hasRole("CLIENTE")
 		.requestMatchers(HttpMethod.GET, "/clientes/me/listarEndereco").hasRole("CLIENTE")
+		.requestMatchers(HttpMethod.GET, "/favoritos").hasRole("CLIENTE")
+        .requestMatchers(HttpMethod.POST, "/favoritos/{idProduto}").hasRole("CLIENTE")
+        .requestMatchers(HttpMethod.DELETE, "/favoritos/{idProduto}").hasRole("CLIENTE")
 
+		
 		.requestMatchers("/h2-console/**").permitAll()
 		.requestMatchers("/swagger-ui/**", "/v3/api-docs/**","/swagger-ui.html").permitAll()
 		

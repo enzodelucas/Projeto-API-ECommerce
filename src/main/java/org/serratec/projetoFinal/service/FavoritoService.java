@@ -18,56 +18,59 @@ import org.springframework.stereotype.Service;
 public class FavoritoService {
 
     @Autowired
-    private FavoritoRepository favoritoRepository;
-
-    @Autowired
     private ClienteRepository clienteRepository;
 
     @Autowired
     private ProdutoRepository produtoRepository;
 
-    public String adicionarFavorito(Long idCliente, Long idProduto) {
-        Optional<Cliente> clienteOpt = clienteRepository.findById(idCliente);
+    @Autowired
+    private FavoritoRepository favoritoRepository;
+
+    public String adicionarFavorito(String emailCliente, Long idProduto) {
+        Cliente cliente = clienteRepository.findByEmail(emailCliente);
         Optional<Produto> produtoOpt = produtoRepository.findById(idProduto);
 
-        if (!clienteOpt.isPresent()) return "Cliente não encontrado";
-        if (!produtoOpt.isPresent()) return "Produto não encontrado";
+        if (cliente == null) {
+            return "Cliente não foi encontrado";
+        }
 
-        Cliente cliente = clienteOpt.get();
+        if (!produtoOpt.isPresent()) {
+            return "Produto não foi encontrado";
+        }
+
         Produto produto = produtoOpt.get();
 
         if (favoritoRepository.existsByClienteAndProdutoId(cliente, idProduto)) {
-            return "Produto já está nos seus favoritos";
+            return "Produto já está nos seu favoritos";
         }
 
-        Favorito favorito = new Favorito(cliente, produto);
-        favoritoRepository.save(favorito);
-
-        return "Produto adicionado aos seus favoritos";
+        favoritoRepository.save(new Favorito(cliente, produto));
+        return "Produto adicionado aos favoritos com sucesso";
     }
 
-    public List<FavoritoDTO> listarFavoritos(Long idCliente) {
-        Optional<Cliente> clienteOpt = clienteRepository.findById(idCliente);
+    public List<FavoritoDTO> listarFavoritos(String emailCliente) {
+        Cliente cliente = clienteRepository.findByEmail(emailCliente);
         List<FavoritoDTO> lista = new ArrayList<>();
 
-        if (clienteOpt.isPresent()) {
-            Cliente cliente = clienteOpt.get();
+        if (cliente != null) {
             List<Favorito> favoritos = favoritoRepository.findByCliente(cliente);
-
             for (Favorito f : favoritos) {
-                lista.add(new FavoritoDTO(f.getProduto().getId(), f.getProduto().getNome()));
+                FavoritoDTO dto = new FavoritoDTO(f.getProduto().getId(), f.getProduto().getNome());
+                lista.add(dto);
             }
         }
 
         return lista;
     }
 
-    public String removerFavorito(Long idCliente, Long idProduto) {
-        Optional<Cliente> clienteOpt = clienteRepository.findById(idCliente);
-        if (!clienteOpt.isPresent()) return "Cliente não encontrado";
+    public String removerFavorito(String emailCliente, Long idProduto) {
+        Cliente cliente = clienteRepository.findByEmail(emailCliente);
+        if (cliente == null) {
+            return "Cliente não foi encontrado";
+        }
 
-        Cliente cliente = clienteOpt.get();
         favoritoRepository.deleteByClienteAndProdutoId(cliente, idProduto);
-        return "Seu produto foi removido dos favoritos";
+        return "Produto removido dos seus favoritos";
     }
 }
+
