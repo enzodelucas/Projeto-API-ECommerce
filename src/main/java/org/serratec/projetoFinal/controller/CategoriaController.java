@@ -45,5 +45,12 @@ public class CategoriaController {
 		Categoria categoriaAtt = categoriaService.editar(id, categoria);
 		return ResponseEntity.ok(categoriaAtt);
 	}
+	
+	@GetMapping("/{id}")
+	public ResponseEntity<Categoria> buscarCategoria(@PathVariable Long id){
+		Categoria categoria = categoriaService.buscarCategoria(id);
+		
+		return ResponseEntity.ok(categoria);
+	}
 
 }

@@ -65,7 +65,7 @@ public class WebSecurityConfig {
             authorize
                 .requestMatchers(HttpMethod.GET, "/clientes").permitAll()
                 .requestMatchers(HttpMethod.POST, "/clientes").permitAll()
-                .requestMatchers(HttpMethod.GET, "/categorias").hasRole("FUNCIONARIO")
+                .requestMatchers(HttpMethod.GET, "/categorias/**").permitAll()
                 .requestMatchers(HttpMethod.GET, "/clientes/verMeusDados/me").permitAll()
                 .requestMatchers(HttpMethod.POST, "/funcionarios").permitAll()
                 .requestMatchers(HttpMethod.GET, "/funcionarios").permitAll()

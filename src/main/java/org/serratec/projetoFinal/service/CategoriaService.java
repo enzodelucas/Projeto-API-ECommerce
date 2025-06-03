@@ -38,6 +38,15 @@ public class CategoriaService {
 		}
 		
 		throw new NaoEncontradoException("Categoria não foi encontrada");
-
+	}
+	
+	public Categoria buscarCategoria(Long id) {
+		Optional<Categoria> categoriaOpt = categoriaRepository.findById(id);
+		if (categoriaOpt.isPresent()) {
+			Categoria categoria = categoriaOpt.get();
+			return categoria;
+		}
+		throw new NaoEncontradoException("Categoria não foi encontrada");
+		
 	}
 }
